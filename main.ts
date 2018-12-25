@@ -184,6 +184,50 @@ namespace mbitbot {
         PMS100 = 3,
     }
     
+    /**
+     * PMS3003 air sensor
+    */
+    //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
+    //% weight=10
+    export function PMS3003(apin: Apin, pms: PMS): number { 
+	    ReadPMS3003Data = 1
+	    switch (apin) {
+            case 1: 
+                serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
+                break;
+            case 2: 
+                serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate9600)
+                break;
+	    case 3: 
+                serial.redirect(SerialPin.P11,SerialPin.P5,BaudRate.BaudRate9600)
+                break;
+	    case 4: 
+                serial.redirect(SerialPin.P7,SerialPin.P9,BaudRate.BaudRate9600)
+                break;
+	    case 5: 
+                serial.redirect(SerialPin.P4,SerialPin.P3,BaudRate.BaudRate9600)
+                break;
+	    case 6: 
+                serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
+                break;
+        }
+	
+	switch (pms) {
+		case 1: 
+			return PM10
+			PT3003 = 0
+			break;
+		case 2: 
+			return PM25
+			PT3003 = 0
+			break;
+		case 3: 
+			return PM102
+			PT3003 = 0
+			break;
+	}   
+    }	
+
     serial.onDataReceived("BW", function () {
 	if(ReadPMS3003Data==1) {
 	    Head = serial.readBuffer(1)
