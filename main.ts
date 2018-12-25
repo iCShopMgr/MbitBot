@@ -189,7 +189,7 @@ namespace mbitbot {
     */
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
-    export function IC_PMS3003(apin: Apin, pms: PMS): number { 
+    export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
 	ReadPMS3003Data = 1
 	if(apin == 1) {
 		serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
