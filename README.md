@@ -27,7 +27,5 @@ Makeblock IO:
 * Me Sound Sensor
 
 # Reference
-
-* https://github.com/jdarling/pxt-pca9685
 * https://github.com/lioujj
 * https://github.com/DFRobot/pxt-maqueen
