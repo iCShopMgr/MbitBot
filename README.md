@@ -17,6 +17,7 @@ CIRCUS IO:
 * Analog VR
 * Relay
 * LCD1602 I2C(0x20, 0x27)
+* PMS3003(G3)
 
 Makeblock IO:
 * Me line Follower
