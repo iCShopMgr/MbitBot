@@ -182,7 +182,12 @@ namespace mbitbot {
     //% blockId=Mbitbot_PMS3003="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function PMS3003(apin: Apin, pms: PMS): number { 
-            ReadPMS3003Data = 1
+        let PM10 = 0
+    	let PM25 = 0
+    	let PM102 = 0
+    	let PT3003 = 0
+    	let ReadPMS3003Data = 0
+	    ReadPMS3003Data = 1
 	    switch (apin) {
             case 1: 
                 serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
@@ -219,6 +224,7 @@ namespace mbitbot {
                 break;
 	}   
     }
+   /**
     let PM10 = 0
     let PM25 = 0
     let PM102 = 0
@@ -226,7 +232,7 @@ namespace mbitbot {
     let DataFlow: Buffer = null
     let Head: Buffer = null
     let ReadPMS3003Data = 0
-    /**serial.onDataReceived("BW", function () {
+    serial.onDataReceived("BW", function () {
 	if(ReadPMS3003Data==1) {
 	    Head = serial.readBuffer(1)
 	    if (Head[0] == 66) {
