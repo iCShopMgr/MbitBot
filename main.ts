@@ -146,12 +146,95 @@ namespace mbitbot {
 			Sepin8 = 8,
 		}
 
-	//%block="move Servo at|pin %SPin |to %number|degrees"
-	export function move_servo_pin(sepin: SePin = 1, usevalue: number): void {
-		if(usevalue>180)usevalue = 180
-		if(usevalue<0)usevalue = 0
-		servo(sepin, usevalue)	
+    //%block="move Servo at|pin %SPin |to %number|degrees"
+    export function move_servo_pin(sepin: SePin = 1, usevalue: number): void {
+	if(usevalue>180)usevalue = 180
+	if(usevalue<0)usevalue = 0
+	servo(sepin, usevalue)	
+    }
+
+    export enum Apin {
+        //% block="I3 (TX:P13,RX:P14)"
+        Ap3 = 1,
+        //% block="I4 (TX:P15,RX:P16)"
+        Ap4 = 2,
+        //% block="I5 (TX:P5,RX:P11)"
+        Ap5 = 3,
+        //% block="I6 (TX:P9,RX:P7)"
+        Ap6 = 4,
+        //% block="I7 (TX:P3,RX:P4)"
+        Ap7 = 5,
+        //% block="I8 (TX:P1,RX:P2)"
+        Ap8 = 6,
+    }
+    
+    export enum PMS {
+        //% block="PM1.0"
+        PM1 = 1,
+        //% block="PM2.5"
+        PM25 = 2,
+	//% block="PM10"
+        PM100 = 3,
+    }
+    /**
+     * PMS3003 air sensor
+    */
+    //% blockId=Mbitbot_PMS3003="PMS3003|pin %apin|get %pms"
+    //% weight=10
+    export function PMS3003(apin: Apin, pms: PMS): number { 
+	let PM10 = 0
+	let PM102 = 0
+	let PM25 = 0
+	let PT3003 = 0
+	let DataFlow: Buffer = null
+	let Head: Buffer = null
+        switch (apin) {
+            case 1: 
+                serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
+                break;
+            case 2: 
+                serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate9600)
+                break;
+	    case 3: 
+                serial.redirect(SerialPin.P11,SerialPin.P5,BaudRate.BaudRate9600)
+                break;
+	    case 4: 
+                serial.redirect(SerialPin.P7,SerialPin.P9,BaudRate.BaudRate9600)
+                break;
+	    case 5: 
+                serial.redirect(SerialPin.P4,SerialPin.P3,BaudRate.BaudRate9600)
+                break;
+	    case 6: 
+                serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
+                break;
+        }
+	serial.onDataReceived("BW", function () {
+	Head = serial.readBuffer(1)
+        if (Head[0] == 66) {
+	    Head = serial.readBuffer(1)
+	    if (Head[0] == 77) {
+		DataFlow = serial.readBuffer(22)
+                PM10 = DataFlow[8] * 256 + DataFlow[9]
+        	PM25 = DataFlow[10] * 256 + DataFlow[11]
+		PM102 = DataFlow[12] * 256 + DataFlow[13]
+		PT3003 = 1
+		}
+	    }
+        })
+	if(PT3003==1) {
+	    if(pms==1) {
+		return PM10
+	    }
+	    else if(pms==2) {
+	    	return PM25
+	    }
+	    else if(pms==3) {
+	    	return PM102
+	    }
 	}
+    }
+
+	
     /**
      * Light Sensor
     */
