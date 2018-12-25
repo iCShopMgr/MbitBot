@@ -183,6 +183,22 @@ namespace mbitbot {
 	//% block="PM10"
         PMS100 = 3,
     }
+    
+    serial.onDataReceived("BW", function () {
+	if(ReadPMS3003Data==1) {
+	    Head = serial.readBuffer(1)
+	    if (Head[0] == 66) {
+	    Head = serial.readBuffer(1)
+	    if (Head[0] == 77) {
+		DataFlow = serial.readBuffer(22)
+		PM10 = DataFlow[8] * 256 + DataFlow[9]
+		PM25 = DataFlow[10] * 256 + DataFlow[11]
+		PM102 = DataFlow[12] * 256 + DataFlow[13]
+		PT3003 = 1
+		}
+	    }
+	}
+     })
 	
     /**
      * Light Sensor
