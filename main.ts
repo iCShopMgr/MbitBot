@@ -226,7 +226,7 @@ namespace mbitbot {
     let DataFlow: Buffer = null
     let Head: Buffer = null
     let ReadPMS3003Data = 0
-    serial.onDataReceived("BW", function () {
+    /*serial.onDataReceived("BW", function () {
 	if(ReadPMS3003Data==1) {
 	    Head = serial.readBuffer(1)
 	    if (Head[0] == 66) {
@@ -240,7 +240,7 @@ namespace mbitbot {
 		}
 	    }
 	}
-     })
+     })*/
 	
     /**
      * Light Sensor
