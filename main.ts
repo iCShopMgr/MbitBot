@@ -220,7 +220,7 @@ namespace mbitbot {
 		PT3003 = 1
 		}
 	    }
-        })
+        }
 	if(PT3003==1) {
 	    if(pms==1) {
 		return PM10
