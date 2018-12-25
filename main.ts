@@ -165,14 +165,8 @@ namespace mbitbot {
         Ap1 = 1,
         //% block="I4 (TX:P15,RX:P16)"
         Ap2 = 2,
-        //% block="I5 (TX:P5,RX:P11)"
-        Ap3 = 3,
-        //% block="I6 (TX:P9,RX:P7)"
-        Ap4 = 4,
-        //% block="I7 (TX:P3,RX:P4)"
-        Ap5 = 5,
         //% block="I8 (TX:P1,RX:P2)"
-        Ap6 = 6,
+        Ap6 = 3,
     }
     
     export enum PMS {
@@ -196,15 +190,6 @@ namespace mbitbot {
 	}
 	else if(apin == 2) {
 		serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate9600)
-	}
-	else if(apin == 3) {
-		serial.redirect(SerialPin.P11,SerialPin.P5,BaudRate.BaudRate9600)
-	}
-	else if(apin == 4) {
-		serial.redirect(SerialPin.P7,SerialPin.P9,BaudRate.BaudRate9600)
-	}
-	else if(apin == 5) {
-		serial.redirect(SerialPin.P4,SerialPin.P3,BaudRate.BaudRate9600)
 	}
 	else {
 		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
