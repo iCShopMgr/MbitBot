@@ -37,7 +37,7 @@ namespace mbitbot {
 			Mpin3 = 15,
 			//% block="M2-"
 			Mpin4 = 16,
-		//% block="M3+"
+			//% block="M3+"
 			Mpin5 = 11,
 			//% block="M3-"
 			Mpin6 = 12,
@@ -204,22 +204,24 @@ namespace mbitbot {
                 break;
         }
 	
-	if(PT3003==1) {
-	    if(pms==1) {
-		return PM10
-	    }
-	    else if(pms==2) {
-	    	return PM25
-	    }
-	    else if(pms==3) {
-	    	return PM102
-	    }
-	    PT3003 = 0
-	}
+	switch (pms) {
+            case 1: 
+                return PM10
+		PT3003 = 0
+                break;
+	    case 2: 
+                return PM25
+		PT3003 = 0
+                break;
+	    case 3: 
+                return PM102
+		PT3003 = 0
+                break;
+	}   
     }
     let PM10 = 0
-    let PM102 = 0
     let PM25 = 0
+    let PM102 = 0
     let PT3003 = 0
     let DataFlow: Buffer = null
     let Head: Buffer = null
