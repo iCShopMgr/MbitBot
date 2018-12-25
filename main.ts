@@ -152,7 +152,14 @@ namespace mbitbot {
 	if(usevalue<0)usevalue = 0
 	servo(sepin, usevalue)	
     }
-
+    
+    let PM10 = 0
+    let PM25 = 0
+    let PM102 = 0
+    let PT3003 = 0
+    let DataFlow: Buffer = null
+    let Head: Buffer = null
+    let ReadPMS3003Data = 0
     export enum Apin {
         //% block="I3 (TX:P13,RX:P14)"
         Ap3 = 1,
@@ -176,17 +183,13 @@ namespace mbitbot {
 	//% block="PM10"
         PMS100 = 3,
     }
+	
     /**
      * PMS3003 air sensor
     */
     //% blockId=Mbitbot_PMS3003="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function PMS3003(apin: Apin, pms: PMS): number { 
-        let PM10 = 0
-    	let PM25 = 0
-    	let PM102 = 0
-    	let PT3003 = 0
-    	let ReadPMS3003Data = 0
 	    ReadPMS3003Data = 1
 	    switch (apin) {
             case 1: 
@@ -224,14 +227,7 @@ namespace mbitbot {
                 break;
 	}   
     }
-   /**
-    let PM10 = 0
-    let PM25 = 0
-    let PM102 = 0
-    let PT3003 = 0
-    let DataFlow: Buffer = null
-    let Head: Buffer = null
-    let ReadPMS3003Data = 0
+    
     serial.onDataReceived("BW", function () {
 	if(ReadPMS3003Data==1) {
 	    Head = serial.readBuffer(1)
@@ -246,7 +242,7 @@ namespace mbitbot {
 		}
 	    }
 	}
-     })*/
+     })
 	
     /**
      * Light Sensor
