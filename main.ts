@@ -170,11 +170,11 @@ namespace mbitbot {
     
     export enum PMS {
         //% block="PM1.0"
-        PM1 = 1,
+        PMS1 = 1,
         //% block="PM2.5"
-        PM25 = 2,
+        PMS25 = 2,
 	//% block="PM10"
-        PM100 = 3,
+        PMS100 = 3,
     }
     /**
      * PMS3003 air sensor
