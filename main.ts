@@ -208,19 +208,7 @@ namespace mbitbot {
                 serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
                 break;
         }
-	serial.onDataReceived("BW", function () {
-	Head = serial.readBuffer(1)
-        if (Head[0] == 66) {
-	    Head = serial.readBuffer(1)
-	    if (Head[0] == 77) {
-		DataFlow = serial.readBuffer(22)
-                PM10 = DataFlow[8] * 256 + DataFlow[9]
-        	PM25 = DataFlow[10] * 256 + DataFlow[11]
-		PM102 = DataFlow[12] * 256 + DataFlow[13]
-		PT3003 = 1
-		}
-	    }
-        }
+	
 	if(PT3003==1) {
 	    if(pms==1) {
 		return PM10
@@ -233,7 +221,19 @@ namespace mbitbot {
 	    }
 	}
     }
-
+    serial.onDataReceived("BW", function () {
+	    Head = serial.readBuffer(1)
+	    if (Head[0] == 66) {
+	    Head = serial.readBuffer(1)
+	    if (Head[0] == 77) {
+		DataFlow = serial.readBuffer(22)
+		PM10 = DataFlow[8] * 256 + DataFlow[9]
+		PM25 = DataFlow[10] * 256 + DataFlow[11]
+		PM102 = DataFlow[12] * 256 + DataFlow[13]
+		PT3003 = 1
+		}
+	    }
+     })
 	
     /**
      * Light Sensor
