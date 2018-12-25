@@ -162,26 +162,26 @@ namespace mbitbot {
     let ReadPMS3003Data = 0
     export enum Apin {
         //% block="I3 (TX:P13,RX:P14)"
-        Ap3 = 1,
+        Ap1 = 1,
         //% block="I4 (TX:P15,RX:P16)"
-        Ap4 = 2,
+        Ap2 = 2,
         //% block="I5 (TX:P5,RX:P11)"
-        Ap5 = 3,
+        Ap3 = 3,
         //% block="I6 (TX:P9,RX:P7)"
-        Ap6 = 4,
+        Ap4 = 4,
         //% block="I7 (TX:P3,RX:P4)"
-        Ap7 = 5,
+        Ap5 = 5,
         //% block="I8 (TX:P1,RX:P2)"
-        Ap8 = 6,
+        Ap6 = 6,
     }
     
     export enum PMS {
         //% block="PM1.0"
-        PMS1 = 1,
+        pms1 = 1,
         //% block="PM2.5"
-        PMS25 = 2,
+        pms2 = 2,
 	//% block="PM10"
-        PMS100 = 3,
+        pms3 = 3,
     }
     
     /**
