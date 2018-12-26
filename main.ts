@@ -153,13 +153,6 @@ namespace mbitbot {
 	servo(sepin, usevalue)	
     }
     
-    let PM10 = 0
-    let PM25 = 0
-    let PM102 = 0
-    let PT3003 = 0
-    let DataFlow: Buffer = null
-    let Head: Buffer = null
-    let ReadPMS3003Data = 0
     export enum Apin {
         //% block="I3 (TX:P13,RX:P14)"
         Ap1 = 1,
@@ -184,6 +177,13 @@ namespace mbitbot {
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
+	let G3PM10 = 0
+    	let G3PM25 = 0
+    	let G3PM102 = 0
+    	let PT3003 = 0
+    	let DataFlow: Buffer = null
+    	let Head: Buffer = null
+    	let ReadPMS3003Data = 0
 	ReadPMS3003Data = 1
 	if(apin == 1) {
 		serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
@@ -194,34 +194,33 @@ namespace mbitbot {
 	else {
 		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
 	}
-	    
+	serial.onDataReceived("BW", function () {
+		if(ReadPMS3003Data==1) {
+		    Head = serial.readBuffer(1)
+		    if (Head[0] == 66) {
+		    Head = serial.readBuffer(1)
+		    if (Head[0] == 77) {
+			DataFlow = serial.readBuffer(22)
+			G3PM10 = DataFlow[8] * 256 + DataFlow[9]
+			G3PM25 = DataFlow[10] * 256 + DataFlow[11]
+			G3PM102 = DataFlow[12] * 256 + DataFlow[13]
+			PT3003 = 1
+			}
+		    }
+		}
+     	})
 	PT3003 = 0
 	if(pms == 1) {
-		return PM10
+		return G3PM10
 	}
 	else if(pms == 2) {
-		return PM25
+		return G3PM25
 	}
 	else {
-		return PM102
+		return G3PM102
 	}	 
     }	
 
-    serial.onDataReceived("BW", function () {
-	if(ReadPMS3003Data==1) {
-	    Head = serial.readBuffer(1)
-	    if (Head[0] == 66) {
-	    Head = serial.readBuffer(1)
-	    if (Head[0] == 77) {
-		DataFlow = serial.readBuffer(22)
-		PM10 = DataFlow[8] * 256 + DataFlow[9]
-		PM25 = DataFlow[10] * 256 + DataFlow[11]
-		PM102 = DataFlow[12] * 256 + DataFlow[13]
-		PT3003 = 1
-		}
-	    }
-	}
-     })
 	
     /**
      * Light Sensor
