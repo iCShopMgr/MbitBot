@@ -152,6 +152,27 @@ namespace mbitbot {
 	if(usevalue<0)usevalue = 0
 	servo(sepin, usevalue)	
     }
+	
+    //%block="Servo |S1 %number|S2 %number|S3 %number|S4 %number|S5 %number|S6 %number|S7 %number|S8 %number|"
+    //% weight=10
+    export function All_servo(va1: number, va2: number, va3: number, va4: number, va5: number, va6: number, va7: number,va8: number ): void {
+	if(va1>180)va1 = 180 if(va1<0)va1 = 0
+	if(va2>180)va2 = 180 if(va2<0)va2 = 0
+	if(va3>180)va3 = 180 if(va3<0)va3 = 0
+	if(va4>180)va4 = 180 if(va4<0)va4 = 0
+	if(va5>180)va5 = 180 if(va5<0)va5 = 0
+	if(va6>180)va6 = 180 if(va6<0)va6 = 0
+	if(va7>180)va7 = 180 if(va7<0)va7 = 0
+	if(va8>180)va8 = 180 if(va8<0)va8 = 0
+	servo(1, va1)
+	servo(2, va2)
+	servo(3, va3)
+	servo(4, va4)
+	servo(5, va5)
+	servo(6, va6)
+	servo(7, va7)
+	servo(8, va8)
+    }
     
     export enum Apin {
         //% block="I3 (TX:P13,RX:P14)"
