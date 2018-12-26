@@ -1,0 +1,3 @@
+{
+    "mbitbot.move_motor_pin|block": "控制直流馬達 腳位 %MPin|速度 %number",
+}
