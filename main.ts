@@ -170,20 +170,19 @@ namespace mbitbot {
 	//% block="PM10"
         pms3 = 3,
     }
-    
+    let G3PM10 = 0
+    let G3PM25 = 0
+    let G3PM102 = 0
+    let PT3003 = 0
+    let DataFlow: Buffer = null
+    let Head: Buffer = null
+    let ReadPMS3003Data = 0
     /**
      * PMS3003 air sensor
     */
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
-	let G3PM10 = 0
-    	let G3PM25 = 0
-    	let G3PM102 = 0
-    	let PT3003 = 0
-    	let DataFlow: Buffer = null
-    	let Head: Buffer = null
-    	let ReadPMS3003Data = 0
 	ReadPMS3003Data = 1
 	if(apin == 1) {
 		serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
@@ -194,7 +193,19 @@ namespace mbitbot {
 	else {
 		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
 	}
-	serial.onDataReceived("BW", function () {
+	
+	PT3003 = 0
+	if(pms == 1) {
+		return G3PM10
+	}
+	else if(pms == 2) {
+		return G3PM25
+	}
+	else {
+		return G3PM102
+	}	 
+    }	
+    serial.onDataReceived("BW", function () {
 		if(ReadPMS3003Data==1) {
 		    Head = serial.readBuffer(1)
 		    if (Head[0] == 66) {
@@ -209,18 +220,6 @@ namespace mbitbot {
 		    }
 		}
      	})
-	PT3003 = 0
-	if(pms == 1) {
-		return G3PM10
-	}
-	else if(pms == 2) {
-		return G3PM25
-	}
-	else {
-		return G3PM102
-	}	 
-    }	
-
 	
     /**
      * Light Sensor
