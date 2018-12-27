@@ -182,73 +182,7 @@ namespace mbitbot {
 	servo(8, va8)
     }
     
-    export enum Apin {
-        //% block="I3 (TX:P13,RX:P14)"
-        Ap1 = 1,
-        //% block="I4 (TX:P15,RX:P16)"
-        Ap2 = 2,
-        //% block="I8 (TX:P1,RX:P2)"
-        Ap6 = 3,
-    }
     
-    export enum PMS {
-        //% block="PM1.0"
-        pms1 = 1,
-        //% block="PM2.5"
-        pms2 = 2,
-	//% block="PM10"
-        pms3 = 3,
-    }
-    let G3PM10 = 0
-    let G3PM25 = 0
-    let G3PM102 = 0
-    let PT3003 = 0
-    let DataFlow: Buffer = null
-    let Head: Buffer = null
-    let ReadPMS3003Data = 0
-    /**
-     * PMS3003 air sensor
-    */
-    //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
-    //% weight=10
-    export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
-	ReadPMS3003Data = 1
-	if(apin == 1) {
-		serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
-	}
-	else if(apin == 2) {
-		serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate9600)
-	}
-	else {
-		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
-	}
-	
-	PT3003 = 0
-	if(pms == 1) {
-		return G3PM10
-	}
-	else if(pms == 2) {
-		return G3PM25
-	}
-	else {
-		return G3PM102
-	}	 
-    }	
-    serial.onDataReceived("BW", function () {
-		if(ReadPMS3003Data==1) {
-		    Head = serial.readBuffer(1)
-		    if (Head[0] == 66) {
-		    Head = serial.readBuffer(1)
-		    if (Head[0] == 77) {
-			DataFlow = serial.readBuffer(22)
-			G3PM10 = DataFlow[8] * 256 + DataFlow[9]
-			G3PM25 = DataFlow[10] * 256 + DataFlow[11]
-			G3PM102 = DataFlow[12] * 256 + DataFlow[13]
-			PT3003 = 1
-			}
-		    }
-		}
-     	})
 	
     /**
      * Light Sensor
