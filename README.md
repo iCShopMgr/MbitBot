@@ -27,5 +27,6 @@ Makeblock IO:
 * Me Sound Sensor
 
 # Reference
+* github:microsoft/pxt-neopixel
 * https://github.com/lioujj
 * https://github.com/DFRobot/pxt-maqueen
