@@ -8,8 +8,7 @@
     },
     "files": [
         "README.md",
-        "main.ts",
-        "_locales/zh/mbitbot-strings.json"
+        "main.ts"
     ],
     "public": true
 }
