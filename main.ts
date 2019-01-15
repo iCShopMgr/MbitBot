@@ -584,6 +584,53 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
         return PUpin
     }
 
+    /**
+     * CIRCUS Vibration
+    */
+    export enum Vibpin {
+        //% block="I3 (P13,P14)"
+        VibI3 = 1,
+        //% block="I4 (P15,P16)"
+        VibI4 = 2,
+        //% block="I5 (P5,P11)"
+        VibI5 = 3,
+        //% block="I6 (P9,P7)"
+        VibI6 = 4,
+        //% block="I7 (P3,P4)"
+        VibI7 = 5,
+        //% block="I8 (P1,P2)"
+        VibI8 = 6,
+    }
+    //% blockId=CIRCUS_Vibration block="Vibration|pin %vibpin"
+    //% weight=10
+    export function Vibration(vibpin: Vibpin): number {
+	pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
+        let VIBpin = pins.digitalReadPin(DigitalPin.P13)
+        switch (vibpin) {
+            case 1: pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
+		VIBpin = pins.digitalReadPin(DigitalPin.P13)
+                break;
+            case 2: pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
+		VIBpin = pins.digitalReadPin(DigitalPin.P15)
+                break;
+            case 3: pins.setPull(DigitalPin.P5, PinPullMode.PullUp)
+		VIBpin = pins.digitalReadPin(DigitalPin.P5)
+                break;
+            case 4: pins.setPull(DigitalPin.P9, PinPullMode.PullUp)
+		VIBpin = pins.digitalReadPin(DigitalPin.P9)
+                break;
+            case 5: pins.setPull(DigitalPin.P3, PinPullMode.PullUp)
+		VIBpin = pins.digitalReadPin(DigitalPin.P3)
+                break;
+            case 6: pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+		VIBpin = pins.digitalReadPin(DigitalPin.P1)
+                break;
+        }
+        return VIBpin
+    }
+    
+    	
+
     export enum VRpin {
         //% block="I7 (P3,P4)"
         VRJ3 = 1,
