@@ -267,12 +267,8 @@ export enum THpin {
     THI4 = 2,
     //% block="I5 (P5,P11)"
     THI5 = 3,
-    //% block="I6 (P9,P7)"
-    THI6 = 4,
-    //% block="I7 (P3,P4)"
-    THI7 = 5,
     //% block="I8 (P1,P2)"
-    THI8 = 6,
+    THI8 = 4,
 }
     
 export enum TH {
@@ -343,27 +339,15 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
     else if(thpin == 3) {
         DHTpin = DigitalPin.P5
     }
-    else if(thpin == 4) {
-        DHTpin = DigitalPin.P9
-        led.enable(false)
-        basic.pause(25)
-    }
-    else if(thpin == 5) {
-        DHTpin = DigitalPin.P3
-        led.enable(false)
-        basic.pause(25)
-    }
     else {
         DHTpin = DigitalPin.P1
     }
     if(th == 1) {
         ReadData()
-        led.enable(true)
         return DHT_Temp
     }
     else {
         ReadData()
-        led.enable(true)
         return DHT_Humi
     } 
 }
