@@ -150,6 +150,7 @@ namespace mbitbot {
     export function Set_Servo_PWM_from(numn: number = 500, numx: number = 1940): void {
     	let StartBit = numn * K
 	let FullScaleBit = numx * K
+	init()
     }
 
     //%block="move Servo at|pin %SPin |to %number|degrees"
