@@ -148,8 +148,8 @@ namespace mbitbot {
 
     //%block="Set Servo PWM from|min %numn|max %numx"
     export function Set_Servo_PWM_from(numn: number = 500, numx: number = 1940): void {
-    	let StartBit = numn * K
-	let FullScaleBit = numx * K
+    	let StartBit = (numn/1000) * K
+	let FullScaleBit = (numx/1000) * K
 	init()
     }
 
