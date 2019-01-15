@@ -181,6 +181,117 @@ namespace mbitbot {
 	servo(7, va7)
 	servo(8, va8)
     }
+    
+    /**
+ * DHT11
+ */
+export enum THpin {
+    //% block="I3 (P13,P14)"
+    THI3 = 1,
+    //% block="I4 (P15,P16)"
+    THI4 = 2,
+    //% block="I5 (P5,P11)"
+    THI5 = 3,
+    //% block="I6 (P9,P7)"
+    THI6 = 4,
+    //% block="I7 (P3,P4)"
+    THI7 = 5,
+    //% block="I8 (P1,P2)"
+    THI8 = 6,
+}
+    
+export enum TH {
+    //% block="Temp"
+    TH1 = 1,
+    //% block="Humi"
+    TH2 = 2,
+}
+let DHT_count = 0
+let DHT_Temp = 0
+let DHT_Humi = 0
+let DHT_value = 0
+let DHTpin = DigitalPin.P1
+// Start
+function Ready(): number {
+    pins.digitalWritePin(DHTpin, 0)
+    basic.pause(20)
+    pins.digitalWritePin(DHTpin, 1)
+    DHT_count = input.runningTimeMicros()
+    while (pins.digitalReadPin(DHTpin) == 1) {
+        if (input.runningTimeMicros() - DHT_count > 50) {
+            return 0
+        }
+    }
+    DHT_count = input.runningTimeMicros()
+    while (pins.digitalReadPin(DHTpin) == 0) {
+        if (input.runningTimeMicros() - DHT_count > 100) {
+            return 0
+        }
+    }
+    DHT_count = input.runningTimeMicros()
+    while (pins.digitalReadPin(DHTpin) == 1) {
+        if (input.runningTimeMicros() - DHT_count > 100) {
+            return 0
+        }
+    }
+    return 1
+}
+
+function ReadData(): number {
+    DHT_value = 0
+    if (Ready() == 1) {
+        for (let k = 0; k < 24; k++) {
+            while (pins.digitalReadPin(DHTpin) == 0) {
+            }
+            DHT_count = input.runningTimeMicros()
+            while (pins.digitalReadPin(DHTpin) == 1) {
+            }
+            if (input.runningTimeMicros() - DHT_count > 40) {
+                DHT_value = DHT_value + (1 << (23 - k));
+            }
+        }
+    }
+    pins.digitalWritePin(DHTpin, 1)
+    DHT_Temp = (DHT_value & 0x0000ffff)
+    DHT_Humi = DHT_value >> 16
+    return 1
+}
+//% blockId=Mbitbot_DHT11 block="DHT11|pin %thpin|get %th"
+//% weight=10
+export function DHT11(thpin: THpin = 1, th: TH = 1): number {
+    if(thpin == 1) {
+        DHTpin = DigitalPin.P13
+    }
+    else if(thpin == 2) {
+        DHTpin = DigitalPin.P15
+    }
+    else if(thpin == 3) {
+        DHTpin = DigitalPin.P5
+    }
+    else if(thpin == 4) {
+        DHTpin = DigitalPin.P9
+        led.enable(false)
+        basic.pause(25)
+    }
+    else if(thpin == 5) {
+        DHTpin = DigitalPin.P3
+        led.enable(false)
+        basic.pause(25)
+    }
+    else {
+        DHTpin = DigitalPin.P1
+    }
+    if(th == 1) {
+        ReadData()
+        led.enable(true)
+        return DHT_Temp
+    }
+    else {
+        ReadData()
+        led.enable(true)
+        return DHT_Humi
+    } 
+}
 	
     /**
      * Light Sensor
