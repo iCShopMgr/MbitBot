@@ -146,6 +146,12 @@ namespace mbitbot {
 			Sepin8 = 8,
 		}
 
+    //%block="Set Servo PWM from|min %numn|max %numx"
+    export function Set_Servo_PWM_from(numn: number = 500, numx: number = 1940): void {
+    	StartBit = numn * K
+	FullScaleBit = numx * K
+    }
+
     //%block="move Servo at|pin %SPin |to %number|degrees"
     export function move_servo_pin(sepin: SePin = 1, usevalue: number): void {
 	if(usevalue>180)usevalue = 180
