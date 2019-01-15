@@ -17,9 +17,9 @@ MbitBot_V1.0
 * 新增部分Makeblock inventor electronic kit 程式積木。
 
 # Support
-Motor:
-* DC motor
-* Servo motor
+MOTOR:
+* DC motor X4
+* Servo motor X8
 
 CIRCUS IO:
 * Push Bottom
