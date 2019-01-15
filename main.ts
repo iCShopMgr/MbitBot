@@ -153,7 +153,7 @@ namespace mbitbot {
 	servo(sepin, usevalue)	
     }
     
-    //%block="Servo |S1 %va1 |S2 %va2 |S3 %va3 |S4 %va4 |S5 %va5 |S6 %va6 |S7 %va7 |S8 %va8"
+    //%block="Servo |S1 %va1|S2 %va2|S3 %va3|S4 %va4|S5 %va5|S6 %va6|S7 %va7|S8 %va8"
     //% weight=10
     export function All_servo(va1: number, va2: number, va3: number, va4: number, va5: number, va6: number, va7: number,va8: number): void {
 	if(va1>180)va1 = 180
