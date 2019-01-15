@@ -603,37 +603,32 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
         switch (enpin) {
             case 1: AENpin = DigitalPin.P13
 		    BENpin = DigitalPin.P14
-		    Last_State = pins.digitalReadPin(DigitalPin.P13)
                 break;
 	    case 2: AENpin = DigitalPin.P15
 		    BENpin = DigitalPin.P16
-		    Last_State = pins.digitalReadPin(DigitalPin.P15)
                 break;
 	    case 3: AENpin = DigitalPin.P5
 		    BENpin = DigitalPin.P11
-		    Last_State = pins.digitalReadPin(DigitalPin.P5)
                 break;
 	    case 4: AENpin = DigitalPin.P9
 		    BENpin = DigitalPin.P7
-		    Last_State = pins.digitalReadPin(DigitalPin.P9)
                 break;
 	    case 5: AENpin = DigitalPin.P3
 		    BENpin = DigitalPin.P4
-		    Last_State = pins.digitalReadPin(DigitalPin.P3)
                 break;
 	    case 6: AENpin = DigitalPin.P1
 		    BENpin = DigitalPin.P2
-		    Last_State = pins.digitalReadPin(DigitalPin.P1)
                 break;    
         }
 	Now_State = pins.digitalReadPin(AENpin)
 	if(Now_State != Last_State) {
-		if(pins.digitalReadPin(AENpin) != Now_State) {
+		if(pins.digitalReadPin(BENpin) != Now_State) {
 			Encoder_value = Encoder_value + 1
 		}
 		else {
 			Encoder_value = Encoder_value - 1
 		}
+		Last_State = Now_State
 	}
         return Encoder_value
     }	
