@@ -576,6 +576,70 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
     }
 
     /**
+     * CIRCUS Encoder
+    */
+    export enum Enpin {
+        //% block="I3 (P13,P14)"
+        EnI3 = 1,
+        //% block="I4 (P15,P16)"
+        EnI4 = 2,
+        //% block="I5 (P5,P11)"
+        EnI5 = 3,
+        //% block="I6 (P9,P7)"
+        EnI6 = 4,
+        //% block="I7 (P3,P4)"
+        EnI7 = 5,
+        //% block="I8 (P1,P2)"
+        EnI8 = 6,
+    }
+    let Encoder_value = 0 
+    let Now_State = 0
+    let Last_State = 0
+    //% blockId=CIRCUS_Rotary_Encoder block="Rotary Encoder|pin %enpin"
+    //% weight=10
+    export function Rotary_Encoder(enpin: Enpin): number {
+        let AENpin = DigitalPin.P13
+	let BENpin = DigitalPin.P14
+        switch (enpin) {
+            case 1: AENpin = DigitalPin.P13
+		    BENpin = DigitalPin.P14
+		    Last_State = pins.digitalReadPin(DigitalPin.P13)
+                break;
+	    case 2: AENpin = DigitalPin.P15
+		    BENpin = DigitalPin.P16
+		    Last_State = pins.digitalReadPin(DigitalPin.P15)
+                break;
+	    case 3: AENpin = DigitalPin.P5
+		    BENpin = DigitalPin.P11
+		    Last_State = pins.digitalReadPin(DigitalPin.P5)
+                break;
+	    case 4: AENpin = DigitalPin.P9
+		    BENpin = DigitalPin.P7
+		    Last_State = pins.digitalReadPin(DigitalPin.P9)
+                break;
+	    case 5: AENpin = DigitalPin.P3
+		    BENpin = DigitalPin.P4
+		    Last_State = pins.digitalReadPin(DigitalPin.P3)
+                break;
+	    case 6: AENpin = DigitalPin.P1
+		    BENpin = DigitalPin.P2
+		    Last_State = pins.digitalReadPin(DigitalPin.P1)
+                break;    
+        }
+	Now_State = pins.digitalReadPin(AENpin)
+	if(Now_State != Last_State) {
+		if(pins.digitalReadPin(AENpin) != Now_State) {
+			Encoder_value = Encoder_value + 1
+		}
+		else {
+			Encoder_value = Encoder_value - 1
+		}
+	}
+        return Encoder_value
+    }	
+	
+	
+    /**
      * CIRCUS Vibration
     */
     export enum Vibpin {
