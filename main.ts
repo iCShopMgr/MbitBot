@@ -628,7 +628,7 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
 		else {
 			Encoder_value = Encoder_value - 1
 		}
-		Last_State = Now_State
+		let Last_State = Now_State
 	}
         return Encoder_value
     }	
