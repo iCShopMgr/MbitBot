@@ -17,6 +17,10 @@ MbitBot_V1.0
 * 新增部分Makeblock inventor electronic kit 程式積木。
 
 # Support
+Motor:
+* DC motor
+* Servo motor
+
 CIRCUS IO:
 * Push Bottom
 * Analog VR
@@ -25,7 +29,6 @@ CIRCUS IO:
 * PMS3003(G3)
 * DHT11
 * Vibration
-
 
 Makeblock IO:
 * Me line Follower
