@@ -146,13 +146,6 @@ namespace mbitbot {
 			Sepin8 = 8,
 		}
 
-    /*//%block="Set Servo PWM from|min %numn|us max %numx|us"
-    export function Set_Servo_PWM_from(numn: number, numx: number): void {
-    	let StartBit = (numn/1000) * 4096/20
-	let FullScaleBit = (numx/1000) * 4096/20
-	init()
-    }*/
-
     //%block="move Servo at|pin %SPin |to %number|degrees"
     export function move_servo_pin(sepin: SePin = 1, usevalue: number): void {
 	if(usevalue>180)usevalue = 180
@@ -574,71 +567,7 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
         }
         return PUpin
     }
-/*===================================
-    /**
-     * CIRCUS Encoder
-    */
-    export enum Enpin {
-        //% block="I3 (P13,P14)"
-        EnI3 = 1,
-        //% block="I4 (P15,P16)"
-        EnI4 = 2,
-        //% block="I5 (P5,P11)"
-        EnI5 = 3,
-        //% block="I6 (P9,P7)"
-        EnI6 = 4,
-        //% block="I7 (P3,P4)"
-        EnI7 = 5,
-        //% block="I8 (P1,P2)"
-        EnI8 = 6,
-    }
-    let Encoder_value = 0 
-    let Now_State = 0
-    let Last_State = 0
-    let doitEn = 0
-    //% blockId=CIRCUS_Rotary_Encoder block="Rotary Encoder|pin %enpin"
-    //% weight=10
-    export function Rotary_Encoder(enpin: Enpin): number {
-        let AENpin = DigitalPin.P13
-	let BENpin = DigitalPin.P14
-        switch (enpin) {
-            case 1: AENpin = DigitalPin.P13
-		    BENpin = DigitalPin.P14
-                break;
-	    case 2: AENpin = DigitalPin.P15
-		    BENpin = DigitalPin.P16
-                break;
-	    case 3: AENpin = DigitalPin.P5
-		    BENpin = DigitalPin.P11
-                break;
-	    case 4: AENpin = DigitalPin.P9
-		    BENpin = DigitalPin.P7
-                break;
-	    case 5: AENpin = DigitalPin.P3
-		    BENpin = DigitalPin.P4
-                break;
-	    case 6: AENpin = DigitalPin.P1
-		    BENpin = DigitalPin.P2
-                break;    
-        }
-	doitEn = 1
-	return Encoder_value
-    }
-    control.inBackground(function () {
-	while(doitEn==1) {
-	    Now_State = pins.digitalReadPin(AENpin)
-	    if(Now_State != Last_State) {
-		if(pins.digitalReadPin(BENpin) != Now_State) {
-			Encoder_value = Encoder_value + 1
-		}
-		else {
-			Encoder_value = Encoder_value - 1
-		}
-		Last_State = Now_State
-	    }
-	}
-    })
-*/===========================================	
+
     /**
      * CIRCUS Vibration
     */
