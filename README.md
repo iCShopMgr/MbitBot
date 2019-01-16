@@ -1,3 +1,9 @@
+# MbitBot
+* micro:bit motor and sensor shields.
+<p align="center">
+  <img src="https://github.com/YisrealHung/MbitBotT/blob/master/MbitBot%20pinout%20diagram.jpg" width="280"/>
+</p>
+
 # MbitBot_V1.2
 * 新增DHT11溫濕度感測器，可搭配空氣品質感測器(PMS3003)組成環境感測聯盟。
 * 新增震動感測器Vibration。
