@@ -1,6 +1,5 @@
 # MbitBot_V1.2
 * 新增DHT11溫濕度感測器，可搭配空氣品質感測器(PMS3003)組成環境感測聯盟。
-* 新增可調整伺服馬達脈衝寬度的積木“Set Servo PWM from min(number) max(number)”，使其適合各式伺服馬達。
 * 新增震動感測器Vibration。
   
 # Previous Versions
