@@ -146,12 +146,12 @@ namespace mbitbot {
 			Sepin8 = 8,
 		}
 
-    //%block="Set Servo PWM from|min %numn|us max %numx|us"
+    /*//%block="Set Servo PWM from|min %numn|us max %numx|us"
     export function Set_Servo_PWM_from(numn: number, numx: number): void {
     	let StartBit = (numn/1000) * 4096/20
 	let FullScaleBit = (numx/1000) * 4096/20
 	init()
-    }
+    }*/
 
     //%block="move Servo at|pin %SPin |to %number|degrees"
     export function move_servo_pin(sepin: SePin = 1, usevalue: number): void {
@@ -574,7 +574,7 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
         }
         return PUpin
     }
-
+/*===================================
     /**
      * CIRCUS Encoder
     */
@@ -638,7 +638,7 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
 	    }
 	}
     })
-	
+*/===========================================	
     /**
      * CIRCUS Vibration
     */
