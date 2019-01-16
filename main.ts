@@ -281,24 +281,9 @@ function Ready(): number {
     pins.digitalWritePin(DHTpin, 0)
     basic.pause(20)
     pins.digitalWritePin(DHTpin, 1)
-    DHT_count = input.runningTimeMicros()
-    while (pins.digitalReadPin(DHTpin) == 1) {
-        if (input.runningTimeMicros() - DHT_count > 50) {
-            return 0
-        }
-    }
-    DHT_count = input.runningTimeMicros()
-    while (pins.digitalReadPin(DHTpin) == 0) {
-        if (input.runningTimeMicros() - DHT_count > 100) {
-            return 0
-        }
-    }
-    DHT_count = input.runningTimeMicros()
-    while (pins.digitalReadPin(DHTpin) == 1) {
-        if (input.runningTimeMicros() - DHT_count > 100) {
-            return 0
-        }
-    }
+    while (pins.digitalReadPin(DHTpin) == 1) {}
+    while (pins.digitalReadPin(DHTpin) == 0) {}
+    while (pins.digitalReadPin(DHTpin) == 1) {}
     return 1
 }
 
@@ -306,18 +291,9 @@ function ReadData(): number {
     DHT_value = 0
     if (Ready() == 1) {
         for (let k = 0; k < 24; k++) {
-	    DHT_count = input.runningTimeMicros()
-            while (pins.digitalReadPin(DHTpin) == 0) {
-		    if (input.runingTimeMicros() - DHT_count > 80) {
-		    	return 0
-		    }
-            }
+            while (pins.digitalReadPin(DHTpin) == 0) {}
             DHT_count = input.runningTimeMicros()
-            while (pins.digitalReadPin(DHTpin) == 1) {
-		    if (input.runingTimeMicros() - DHT_count > 150) {
-		    	return 0
-		    }
-            }
+            while (pins.digitalReadPin(DHTpin) == 1) {}
             if (input.runningTimeMicros() - DHT_count > 40) {
                 DHT_value = DHT_value + (1 << (23 - k));
             }
