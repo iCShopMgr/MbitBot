@@ -306,19 +306,28 @@ function ReadData(): number {
     DHT_value = 0
     if (Ready() == 1) {
         for (let k = 0; k < 24; k++) {
+	    DHT_count = input.runningTimeMicros()
             while (pins.digitalReadPin(DHTpin) == 0) {
+		    if (input.runingTimeMicros() - DHT_count > 80) {
+		    	return 0
+		    }
             }
             DHT_count = input.runningTimeMicros()
             while (pins.digitalReadPin(DHTpin) == 1) {
+		    if (input.runingTimeMicros() - DHT_count > 150) {
+		    	return 0
+		    }
             }
             if (input.runningTimeMicros() - DHT_count > 40) {
                 DHT_value = DHT_value + (1 << (23 - k));
             }
         }
+	DHT_Temp = (DHT_value & 0x0000ffff)
+    	DHT_Humi = DHT_value >> 16
     }
-    pins.digitalWritePin(DHTpin, 1)
-    DHT_Temp = (DHT_value & 0x0000ffff)
-    DHT_Humi = DHT_value >> 16
+    else {
+    	pins.digitalWritePin(DHTpin, 1)
+    } 
     return 1
 }
 //% blockId=Mbitbot_DHT11 block="DHT11|pin %thpin|get %th"
