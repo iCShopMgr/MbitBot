@@ -1,5 +1,6 @@
 # MbitBot
-* micro:bit motor and sensor shields.
+* micro:bit 控制馬達與連接感測器的最佳方案。
+* 參考文章：https://www.makerlab.tw/blog/categories/micro-bit%E7%B3%BB%E5%88%97
 <p align="center">
   <img src="https://github.com/YisrealHung/MbitBotT/blob/master/MbitBot.jpg" width="700"/>
 </p>
