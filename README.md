@@ -1,7 +1,7 @@
 # MbitBot
 * micro:bit motor and sensor shields.
 <p align="center">
-  <img src="https://github.com/YisrealHung/MbitBotT/blob/master/MbitBot.jpg" width="500"/>
+  <img src="https://github.com/YisrealHung/MbitBotT/blob/master/MbitBot.jpg" width="700"/>
 </p>
 
 # MbitBot_V1.2
