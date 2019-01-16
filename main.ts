@@ -595,6 +595,7 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
     let Encoder_value = 0 
     let Now_State = 0
     let Last_State = 0
+    let doitEn = 0
     //% blockId=CIRCUS_Rotary_Encoder block="Rotary Encoder|pin %enpin"
     //% weight=10
     export function Rotary_Encoder(enpin: Enpin): number {
@@ -620,19 +621,23 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
 		    BENpin = DigitalPin.P2
                 break;    
         }
-	Now_State = pins.digitalReadPin(AENpin)
-	if(Now_State != Last_State) {
+	doitEn = 1
+	return Encoder_value
+    }
+    control.inBackground(function () {
+	while(doitEn==1) {
+	    Now_State = pins.digitalReadPin(AENpin)
+	    if(Now_State != Last_State) {
 		if(pins.digitalReadPin(BENpin) != Now_State) {
 			Encoder_value = Encoder_value + 1
 		}
 		else {
 			Encoder_value = Encoder_value - 1
 		}
-		let Last_State = Now_State
+		Last_State = Now_State
+	    }
 	}
-        return Encoder_value
-    }	
-	
+    })
 	
     /**
      * CIRCUS Vibration
