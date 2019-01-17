@@ -273,6 +273,8 @@ export enum TH {
 }
 let DHT_count = 0
 let DHT_value = 0
+let DHT_Temp = 0
+let DHT_Humi = 0
 let DHTpin = DigitalPin.P1
 // Start
 function Ready(): number {
@@ -311,8 +313,8 @@ function ReadData(): number {
                 DHT_value = DHT_value + (1 << (23 - k));
             }
         }
-	let DHT_Temp = (DHT_value & 0x0000ffff)
-    	let DHT_Humi = DHT_value >> 16
+	DHT_Temp = (DHT_value & 0x0000ffff)
+    	DHT_Humi = DHT_value >> 16
     }
     else {
     	pins.digitalWritePin(DHTpin, 1)
