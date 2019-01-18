@@ -235,7 +235,6 @@ namespace mbitbot {
 		PMSPin2 = DigitalPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
-	basic.pause(1000)
 	serial.onDataReceived("BW", function () {
 		Head = serial.readBuffer(1)
 		if (Head[0] == 66) {
