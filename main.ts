@@ -223,19 +223,7 @@ namespace mbitbot {
 	else {
 		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
 	}
-	
-	PT3003 = 0
-	if(pms == 1) {
-		return G3PM10
-	}
-	else if(pms == 2) {
-		return G3PM25
-	}
-	else {
-		return G3PM102
-	}	 
-    }	
-    serial.onDataReceived("BW", function () {
+	serial.onDataReceived("BW", function () {
 		if(ReadPMS3003Data==1) {
 		    Head = serial.readBuffer(1)
 		    if (Head[0] == 66) {
@@ -249,7 +237,20 @@ namespace mbitbot {
 			}
 		    }
 		}
-     })
+        })
+	PT3003 = 0
+	pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
+	if(pms == 1) {
+		return G3PM10
+	}
+	else if(pms == 2) {
+		return G3PM25
+	}
+	else {
+		return G3PM102
+	}	 
+    }	
 	
     /**
  * DHT11
