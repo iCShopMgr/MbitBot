@@ -251,6 +251,8 @@ namespace mbitbot {
 		led.unplot(4, 0)
         })
 	led.plot(4, 0)
+	pins.setPull(PMSPin1, PinPullMode.PullUp)
+	pins.setPull(PMSPin2, PinPullMode.PullUp)
 	if(pms == 1) {
 		return G3PM10
 	}
