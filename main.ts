@@ -235,8 +235,19 @@ namespace mbitbot {
 		PMSPin2 = DigitalPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
-	for(let i=0;i<3;i++) {
-	    serial.onDataReceived("BW", function () {
+	
+	led.plot(4, 0)
+	if(pms == 1) {
+		return G3PM10
+	}
+	else if(pms == 2) {
+		return G3PM25
+	}
+	else {
+		return G3PM102
+	}	 
+    }
+serial.onDataReceived("BW", function () {
 		Head = serial.readBuffer(1)
 		if (Head[0] == 66) {
 		    Head = serial.readBuffer(1)
@@ -251,20 +262,6 @@ namespace mbitbot {
 		led.unplot(4, 0)
     		
             })
-	}
-	pins.setPull(PMSPin1, PinPullMode.PullUp)
-	pins.setPull(PMSPin2, PinPullMode.PullUp)
-	led.plot(4, 0)
-	if(pms == 1) {
-		return G3PM10
-	}
-	else if(pms == 2) {
-		return G3PM25
-	}
-	else {
-		return G3PM102
-	}	 
-    }	
 	
     /**
  * DHT11
