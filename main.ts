@@ -247,6 +247,9 @@ namespace mbitbot {
 		    }
 		    
 		}
+		led.plot(4, 0)
+    		basic.pause(500)
+    		led.unplot(4, 0)
         })
 	pins.setPull(PMSPin1, PinPullMode.PullUp)
 	pins.setPull(PMSPin2, PinPullMode.PullUp)
