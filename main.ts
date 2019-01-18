@@ -209,22 +209,29 @@ namespace mbitbot {
     let Head: Buffer = null
     let PMSTX = SerialPin.P2
     let PMSRX = SerialPin.P1
+    let PMSPin1 = DigitalPin.P2
+    let PMSPin2 = DigitalPin.P1
     
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
-	ReadPMS3003Data = 1
 	if(apin == 1) {
 		PMSTX = SerialPin.P14
     		PMSRX = SerialPin.P13
+		PMSPin1 = DigitalPin.P14
+		PMSPin2 = DigitalPin.P13
 	}
 	else if(apin == 2) {
 		PMSTX = SerialPin.P16
     		PMSRX = SerialPin.P15
+		PMSPin1 = DigitalPin.P16
+		PMSPin2 = DigitalPin.P15
 	}
 	else {
 		PMSTX = SerialPin.P2
     		PMSRX = SerialPin.P1
+		PMSPin1 = DigitalPin.P2
+		PMSPin2 = DigitalPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
 	serial.onDataReceived("BW", function () {
@@ -240,8 +247,8 @@ namespace mbitbot {
 		    
 		}
         })
-	pins.setPull(PMSTX, PinPullMode.PullUp)
-	pins.setPull(PMSRX, PinPullMode.PullUp)
+	pins.setPull(PMSPin1, PinPullMode.PullUp)
+	pins.setPull(PMSPin2, PinPullMode.PullUp)
 	if(pms == 1) {
 		return G3PM10
 	}
