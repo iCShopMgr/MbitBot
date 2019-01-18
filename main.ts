@@ -235,6 +235,7 @@ namespace mbitbot {
 		PMSPin2 = DigitalPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
+	led.unplot(4, 0)
 	serial.onDataReceived("BW", function () {
 		Head = serial.readBuffer(1)
 		if (Head[0] == 66) {
@@ -247,7 +248,6 @@ namespace mbitbot {
 		    }
 		    
 		}
-		led.unplot(4, 0)
         })
 	led.plot(4, 0)
 	pins.setPull(PMSPin1, PinPullMode.PullUp)
