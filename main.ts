@@ -237,6 +237,7 @@ namespace mbitbot {
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
 	led.plot(4, 0)
+	basic.pause(1000)
 	PMS3003Data = 1
 	serial.onDataReceived("BW", function () {
 		if(PMS3003Data == 1) {
