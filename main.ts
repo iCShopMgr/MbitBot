@@ -222,8 +222,6 @@ namespace mbitbot {
     let Head: Buffer = null
     let PMSTX = SerialPin.P2
     let PMSRX = SerialPin.P1
-    let PMSPin1 = DigitalPin.P2
-    let PMSPin2 = DigitalPin.P1
     let PMS3003Data = 0
     let PMS_count = 0
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
