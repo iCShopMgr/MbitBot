@@ -238,13 +238,13 @@ namespace mbitbot {
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
 	basic.pause(1000)
 	if(PMS3003Data == 1) {
-		led.plot(4, 4)
+		led.plot(4, 0)
 	}
 	else {
-		led.unplot(4, 4)
+		led.unplot(4, 0)
 	}
 	PMS3003Data = 1
-	serial.onDataReceived("BW", function () {
+	serial.onDataReceived("BM", function () {
 		if(PMS3003Data == 1) {
 			Head = serial.readBuffer(1)
 			if (Head[0] == 66) {
