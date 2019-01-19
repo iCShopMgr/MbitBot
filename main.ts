@@ -1,7 +1,19 @@
 
 //% weight=0 color=#b5b100 icon="\uf299" block="MbitBot"
 namespace mbitbot {
-    let K = 4096 / 20
+    	pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P3, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P4, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P5, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P7, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P9, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P11, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
+	let K = 4096 / 20
 	let StartBit = 0.5 * K
 	let FullScaleBit = 1.94 * K
 
@@ -220,20 +232,14 @@ namespace mbitbot {
 	if(apin == 1) {
 		PMSTX = SerialPin.P14
     		PMSRX = SerialPin.P13
-		PMSPin1 = DigitalPin.P14
-		PMSPin2 = DigitalPin.P13
 	}
 	else if(apin == 2) {
 		PMSTX = SerialPin.P16
     		PMSRX = SerialPin.P15
-		PMSPin1 = DigitalPin.P16
-		PMSPin2 = DigitalPin.P15
 	}
 	else {
 		PMSTX = SerialPin.P2
     		PMSRX = SerialPin.P1
-		PMSPin1 = DigitalPin.P2
-		PMSPin2 = DigitalPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
 	basic.pause(300)
@@ -267,8 +273,6 @@ namespace mbitbot {
 		}
 	}
 	
-	pins.setPull(PMSPin1, PinPullMode.PullUp)
-	pins.setPull(PMSPin2, PinPullMode.PullUp)
 	if(pms == 1) {
 		return G3PM10
 	}
