@@ -224,7 +224,7 @@ namespace mbitbot {
     let PMSRX = SerialPin.P1
     let PMSPin1 = DigitalPin.P2
     let PMSPin2 = DigitalPin.P1
-    let PMS3003Data = 1
+    let PMS3003Data = 0
     let PMS_count = 0
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
@@ -242,13 +242,7 @@ namespace mbitbot {
     		PMSRX = SerialPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
-	basic.pause(300)
-	if(PMS3003Data == 1) {
-		led.plot(4, 0)
-	}
-	else {
-		led.unplot(4, 0)
-	}
+	basic.pause(500)
 	PMS3003Data = 1
 	serial.onDataReceived("BM", function () {
 		if(PMS3003Data == 1) {
@@ -268,7 +262,7 @@ namespace mbitbot {
         })
 	PMS_count = input.runningTime()
 	while(PMS3003Data == 1){
-		if(input.runningTime() - PMS_count > 2) {
+		if(input.runningTime() - PMS_count > 3) {
 			break
 		}
 	}
@@ -281,7 +275,13 @@ namespace mbitbot {
 	}
 	else {
 		return G3PM102
-	}	 
+	}
+	if(PMS3003Data == 1) {
+		led.plot(4, 4)
+	}
+	else {
+		led.unplot(4, 4)
+	}
     }
 	
     /**
