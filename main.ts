@@ -236,7 +236,6 @@ namespace mbitbot {
 		PMSPin2 = DigitalPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
-	basic.pause(1000)
 	if(PMS3003Data == 1) {
 		led.plot(4, 0)
 	}
