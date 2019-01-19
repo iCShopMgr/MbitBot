@@ -280,6 +280,8 @@ namespace mbitbot {
 	else {
 		led.unplot(4, 4)
 	}
+	pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
     }
 	
     /**
