@@ -239,7 +239,7 @@ namespace mbitbot {
 		PMSTX = SerialPin.P2
     		PMSRX = SerialPin.P1
 	}
-	PMS3003Data = 1
+	PMS3003Data = 0
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
 	basic.pause(100)
 	serial.onDataReceived("BM", function () {
