@@ -239,6 +239,7 @@ namespace mbitbot {
 		PMSTX = SerialPin.P2
     		PMSRX = SerialPin.P1
 	}
+	PMS3003Data = 1
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
 	basic.pause(100)
 	serial.onDataReceived("BM", function () {
@@ -270,9 +271,6 @@ namespace mbitbot {
 	else {
 		return G3PM102
 	}
-	
-	pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
-	pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
     }
 	
     /**
