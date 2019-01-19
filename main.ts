@@ -236,7 +236,6 @@ namespace mbitbot {
 		PMSPin2 = DigitalPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
-	led.plot(4, 0)
 	basic.pause(1000)
 	PMS3003Data = 1
 	serial.onDataReceived("BW", function () {
@@ -261,7 +260,12 @@ namespace mbitbot {
 			break
 		}
 	}
-	led.unplot(4, 0)
+	if(PMS3003Data == 1) {
+		led.plot(4, 4)
+	}
+	else {
+		led.unplot(4, 4)
+	}
 	pins.setPull(PMSPin1, PinPullMode.PullUp)
 	pins.setPull(PMSPin2, PinPullMode.PullUp)
 	if(pms == 1) {
