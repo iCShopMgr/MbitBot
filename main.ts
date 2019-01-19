@@ -212,7 +212,7 @@ namespace mbitbot {
     let PMSRX = SerialPin.P1
     let PMSPin1 = DigitalPin.P2
     let PMSPin2 = DigitalPin.P1
-    
+    let PMS3003Data = 0
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
@@ -235,21 +235,26 @@ namespace mbitbot {
 		PMSPin2 = DigitalPin.P1
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
-	led.unplot(4, 0)
-	serial.onDataReceived("BW", function () {
-		Head = serial.readBuffer(1)
-		if (Head[0] == 66) {
-		    Head = serial.readBuffer(1)
-		    if (Head[0] == 77) {
-			DataFlow = serial.readBuffer(22)
-			G3PM10 = DataFlow[8] * 256 + DataFlow[9]
-			G3PM25 = DataFlow[10] * 256 + DataFlow[11]
-			G3PM102 = DataFlow[12] * 256 + DataFlow[13]
-		    }
-		    
-		}
-        })
 	led.plot(4, 0)
+	PMS3003Data = 1
+	serial.onDataReceived("BW", function () {
+		if(PMS3003Data == 1) {
+			Head = serial.readBuffer(1)
+			if (Head[0] == 66) {
+			    Head = serial.readBuffer(1)
+			    if (Head[0] == 77) {
+				DataFlow = serial.readBuffer(22)
+				G3PM10 = DataFlow[8] * 256 + DataFlow[9]
+				G3PM25 = DataFlow[10] * 256 + DataFlow[11]
+				G3PM102 = DataFlow[12] * 256 + DataFlow[13]
+			    }
+
+			}
+		}
+		PMS3003Data = 0
+        })
+	while(PMS3003Data == 1){}
+	led.unplot(4, 0)
 	pins.setPull(PMSPin1, PinPullMode.PullUp)
 	pins.setPull(PMSPin2, PinPullMode.PullUp)
 	if(pms == 1) {
