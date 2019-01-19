@@ -213,6 +213,7 @@ namespace mbitbot {
     let PMSPin1 = DigitalPin.P2
     let PMSPin2 = DigitalPin.P1
     let PMS3003Data = 0
+    let PMS_count = 0
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
@@ -253,7 +254,12 @@ namespace mbitbot {
 		}
 		PMS3003Data = 0
         })
-	while(PMS3003Data == 1){}
+	PMS_count = input.runningTime()
+	while(PMS3003Data == 1){
+		if(input.runningTime() - PMS_count > 2) {
+			break
+		}
+	}
 	led.unplot(4, 0)
 	pins.setPull(PMSPin1, PinPullMode.PullUp)
 	pins.setPull(PMSPin2, PinPullMode.PullUp)
