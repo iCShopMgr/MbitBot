@@ -222,6 +222,7 @@ namespace mbitbot {
     let Head: Buffer = null
     let PMSTX = SerialPin.P2
     let PMSRX = SerialPin.P1
+    let PMS3003Data = 0
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
@@ -237,26 +238,24 @@ namespace mbitbot {
 		PMSTX = SerialPin.P2
     		PMSRX = SerialPin.P1
 	}
-	led.plot(4, 4)
         serial.redirect(PMSTX, PMSRX, 9600)
         basic.pause(100)
-	let countPMS = input.runningTime()
-	while(true) {
-	    Head = serial.readBuffer(1)
-            if (Head[0] == 66) {
-            	Head = serial.readBuffer(1)
-            	if (Head[0] == 77) {
-                    DataFlow = serial.readBuffer(22)
-                    G3PM10 = DataFlow[8] * 256 + DataFlow[9]
-                    G3PM25 = DataFlow[10] * 256 + DataFlow[11]
-                    G3PM102 = DataFlow[12] * 256 + DataFlow[13]
+	PMS3003Data = 1
+	control.inBackground(function () {
+    	    while(PMS3003Data == 1) {
+	        Head = serial.readBuffer(1)
+                if (Head[0] == 66) {
+            	    Head = serial.readBuffer(1)
+            	    if (Head[0] == 77) {
+                        DataFlow = serial.readBuffer(22)
+                    	G3PM10 = DataFlow[8] * 256 + DataFlow[9]
+                    	G3PM25 = DataFlow[10] * 256 + DataFlow[11]
+                    	G3PM102 = DataFlow[12] * 256 + DataFlow[13]
+                    }
                 }
-            }
-	    if((input.runningTime() - countPMS) > 2) {
-	    	break
 	    }
-	}
-	
+	})
+	    
 	if(pms == 1) {
 		return G3PM10
 	}
@@ -266,7 +265,6 @@ namespace mbitbot {
 	else {
 		return G3PM102
 	}
-	led.unplot(4, 4)
     }
 	
     /**
