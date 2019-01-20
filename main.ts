@@ -223,7 +223,7 @@ namespace mbitbot {
     let PMSTX = SerialPin.P2
     let PMSRX = SerialPin.P1
     let ReadPMS3003Data = 0
-    //% blockId=Mbitbot_PMS3003_set block="PMS3003|set %apin"
+    //% blockId=Mbitbot_PMS3003_set block="set|PMS3003 %apin|at baud rate 9600"
     //% weight=10
     export function IC_PMS3003_set(apin: Apin = 1): void { 
 	if(apin == 1) {
