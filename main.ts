@@ -222,21 +222,26 @@ namespace mbitbot {
     let Head: Buffer = null
     let PMSTX = SerialPin.P2
     let PMSRX = SerialPin.P1
-    //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
+    //% blockId=Mbitbot_PMS3003 block="PMS3003|set %apin"
     //% weight=10
-    export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
+    export function IC_PMS3003(apin: Apin = 1): void { 
 	if(apin == 1) {
-		PMSTX = SerialPin.P14
-    		PMSRX = SerialPin.P13
+	    PMSTX = SerialPin.P14
+    	    PMSRX = SerialPin.P13
 	}
 	else if(apin == 2) {
-		PMSTX = SerialPin.P16
-    		PMSRX = SerialPin.P15
+	    PMSTX = SerialPin.P16
+    	    PMSRX = SerialPin.P15
 	}
 	else {
-		PMSTX = SerialPin.P2
-    		PMSRX = SerialPin.P1
+	    PMSTX = SerialPin.P2
+    	    PMSRX = SerialPin.P1
 	}
+	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
+    }
+    //% blockId=Mbitbot_PMS3003 block="PMS3003|get %pms"
+    //% weight=10
+    export function IC_PMS3003(pms: PMS = 1): number { 
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
 	basic.pause(100)
 	serial.onDataReceived("BM", function () {
