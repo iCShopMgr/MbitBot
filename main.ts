@@ -240,6 +240,7 @@ namespace mbitbot {
 	}
 	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
 	basic.pause(10)
+	ReadPMS3003Data = 1
     }
     //% blockId=Mbitbot_PMS3003_get block="PMS3003|get %pms"
     //% weight=10
