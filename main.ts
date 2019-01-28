@@ -196,53 +196,48 @@ namespace mbitbot {
     }
   
 /**
-     * PMS3003 air sensor
-    */
-    export enum Apin {
-        //% block="I3 (TX:P13,RX:P14)"
-        Ap1 = 1,
-        //% block="I4 (TX:P15,RX:P16)"
-        Ap2 = 2,
-        //% block="I8 (TX:P1,RX:P2)"
-        Ap6 = 3,
-    }
-    
-    export enum PMS {
-        //% block="PM1.0"
-        pms1 = 1,
-        //% block="PM2.5"
-        pms2 = 2,
-	//% block="PM10"
-        pms3 = 3,
-    }
+* PMS3003 air sensor
+*/
+    let count = 0
+    let num = 0
+    let Smooth: Buffer = null
+    let Head: Buffer = null
+    let G3PM100 = 0
     let G3PM10 = 0
     let G3PM25 = 0
-    let G3PM102 = 0
-    let DataFlow: Buffer = null
-    let Head: Buffer = null
-    let PMSTX = SerialPin.P2
-    let PMSRX = SerialPin.P1
-    //% blockId=Mbitbot_PMS3003_set block="set|PMS3003 %apin|at baud rate 9600"
+    //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
-    export function IC_PMS3003_set(apin: Apin = 1): void { 
+    export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
 	if(apin == 1) {
-	    PMSTX = SerialPin.P14
-    	    PMSRX = SerialPin.P13
+		serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
 	}
 	else if(apin == 2) {
-	    PMSTX = SerialPin.P16
-    	    PMSRX = SerialPin.P15
+		serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate9600)
 	}
 	else {
-	    PMSTX = SerialPin.P2
-    	    PMSRX = SerialPin.P1
+		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
 	}
-	serial.redirect(PMSTX,PMSRX,BaudRate.BaudRate9600)
-	basic.pause(10)
-    }
-    //% blockId=Mbitbot_PMS3003_get block="PMS3003|get %pms"
-    //% weight=10
-    export function IC_PMS3003_get(pms: PMS = 1): number { 
+	Smooth = serial.readBuffer(20)
+    	Head = serial.readBuffer(25)
+    	serial.redirectToUSB()
+    	count = 0
+    	while (true) {
+            num = Head.getNumber(NumberFormat.Int8LE, count)
+            if (num == 66) {
+                num = Head.getNumber(NumberFormat.Int8LE, count + 1)
+                if (num == 77) {
+                    Head.shift(count)
+                    G3PM10 = Head[10] * 256 + Head[11]
+                    G3PM25 = Head[12] * 256 + Head[13]
+                    G3PM100 = Head[14] * 256 + Head[15]
+                    break
+                }
+            }
+            count = count + 1
+            if (count > 25) {
+                break
+            }
+        }
 	if(pms == 1) {
 		return G3PM10
 	}
@@ -250,25 +245,10 @@ namespace mbitbot {
 		return G3PM25
 	}
 	else {
-		return G3PM102
-	}
-    }
-	
-    serial.onDataReceived("BM", function () {
-	Head = serial.readBuffer(1)
-	if (Head[0] == 66) {
-	    Head = serial.readBuffer(1)
-		if (Head[0] == 77) {
-			DataFlow = serial.readBuffer(22)
-			G3PM10 = DataFlow[8] * 256 + DataFlow[9]
-			G3PM25 = DataFlow[10] * 256 + DataFlow[11]
-			G3PM102 = DataFlow[12] * 256 + DataFlow[13]
-		}
+		return G3PM100
+	}	 
+    }	
 
-	}
-	     
-    })
-	
     /**
  * DHT11
  */
