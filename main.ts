@@ -198,6 +198,23 @@ namespace mbitbot {
 /**
 * PMS3003 air sensor
 */
+    export enum Apin {
+        //% block="I3 (TX:P13,RX:P14)"
+        Ap1 = 1,
+        //% block="I4 (TX:P15,RX:P16)"
+        Ap2 = 2,
+        //% block="I8 (TX:P1,RX:P2)"
+        Ap6 = 3,
+    }
+    
+    export enum PMS {
+        //% block="PM1.0"
+        pms1 = 1,
+        //% block="PM2.5"
+        pms2 = 2,
+	//% block="PM10"
+        pms3 = 3,
+    }
     let count = 0
     let num = 0
     let Smooth: Buffer = null
