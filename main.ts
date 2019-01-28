@@ -194,7 +194,40 @@ namespace mbitbot {
 	servo(7, va7)
 	servo(8, va8)
     }
-  
+
+/**
+* ESP8266
+*/
+    export enum ESPpin {
+        //% block="I3 (TX:P13,RX:P14)"
+        Ep1 = 1,
+        //% block="I4 (TX:P15,RX:P16)"
+        Ep2 = 2,
+        //% block="I8 (TX:P1,RX:P2)"
+        Ep6 = 3,
+    }
+	
+    //% blockId=Mbitbot_ESP8266 block="ESP8266|pin %epin|Wifi SSID %ssid|KEY %key"
+    //% weight=10
+    export function IC_ESP8266(epin: ESPpin = 1, ssid: string, key: string): void { 
+	if(epin == 1) {
+		serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate115200)
+	}
+	else if(epin == 2) {
+		serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate115200)
+	}
+	else {
+		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate115200)
+	}
+    	serial.writeString("AT+RST" + "\u000D" + "\u000A")
+    	basic.pause(100)
+    	serial.writeString("AT+CWMODE_CUR=1" + "\u000D" + "\u000A")
+    	basic.pause(100)
+    	let printT = "AT+CWJAP_CUR=\"" + ssid + "\",\"" + key + "\""
+    	serial.writeString("" + printT + "\u000D" + "\u000A")
+    	basic.pause(4000)
+    }
+	
 /**
 * PMS3003 air sensor
 */
