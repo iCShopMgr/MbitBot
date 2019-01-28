@@ -215,13 +215,15 @@ namespace mbitbot {
 	//% block="PM10"
         pms3 = 3,
     }
-    let count = 0
-    let num = 0
+	
+    let PMcount = 0
+    let PMnum = 0
     let Smooth: Buffer = null
     let Head: Buffer = null
     let G3PM100 = 0
     let G3PM10 = 0
     let G3PM25 = 0
+    
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
@@ -237,21 +239,21 @@ namespace mbitbot {
 	Smooth = serial.readBuffer(20)
     	Head = serial.readBuffer(25)
     	serial.redirectToUSB()
-    	count = 0
+    	PMcount = 0
     	while (true) {
-            num = Head.getNumber(NumberFormat.Int8LE, count)
-            if (num == 66) {
-                num = Head.getNumber(NumberFormat.Int8LE, count + 1)
-                if (num == 77) {
-                    Head.shift(count)
+            PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount)
+            if (PMnum == 66) {
+                PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount + 1)
+                if (PMnum == 77) {
+                    Head.shift(PMcount)
                     G3PM10 = Head[10] * 256 + Head[11]
                     G3PM25 = Head[12] * 256 + Head[13]
                     G3PM100 = Head[14] * 256 + Head[15]
                     break
                 }
             }
-            count = count + 1
-            if (count > 25) {
+            PMcount = PMcount + 1
+            if (PMcount > 25) {
                 break
             }
         }
