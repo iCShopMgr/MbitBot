@@ -211,13 +211,13 @@ namespace mbitbot {
     //% weight=10
     export function IC_ESP8266(epin: ESPpin = 1, ssid: string, key: string): void { 
 	if(epin == 1) {
-		serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate115200)
+		serial.redirect(SerialPin.P13,SerialPin.P14,BaudRate.BaudRate115200)
 	}
 	else if(epin == 2) {
-		serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate115200)
+		serial.redirect(SerialPin.P15,SerialPin.P16,BaudRate.BaudRate115200)
 	}
 	else {
-		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate115200)
+		serial.redirect(SerialPin.P1,SerialPin.P2,BaudRate.BaudRate115200)
 	}
     	serial.writeString("AT+RST" + "\u000D" + "\u000A")
     	basic.pause(1000)
