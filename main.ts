@@ -232,7 +232,7 @@ namespace mbitbot {
     //% weight=10
     export function IC_ThingSpeak(apikey: string, f1: number, f2: number, f3: number, f4: number, f5: number, f6: number, f7: number, f8: number): void {
     	let printT2 = "AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80"
-    	serial.writeString("" + printT2 + "\u000D" + "\u000A")
+    	serial.writeString(printT2 + "\u000D" + "\u000A")
     	basic.pause(4000)
     	let printT3 = "GET /update?key=" + apikey + "&field1=" + f1 + "&field2=" + f2 + "&field3=" + f3 + "&field4=" + f4 + "&field5=" + f5 + "&field6=" + f6 + "&field7=" + f7 + "&field8=" + f8
     	let printT4 = "AT+CIPSEND=" + (printT3.length + 2)
