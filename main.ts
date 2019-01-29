@@ -224,7 +224,7 @@ namespace mbitbot {
     	serial.writeString("AT+CWMODE_CUR=1" + "\u000D" + "\u000A")
     	basic.pause(100)
     	let printT = "AT+CWJAP_CUR=\"" + ssid + "\",\"" + key + "\""
-    	serial.writeString("" + printT + "\u000D" + "\u000A")
+    	serial.writeString(printT + "\u000D" + "\u000A")
     	basic.pause(4000)
     }
     
@@ -236,9 +236,9 @@ namespace mbitbot {
     	basic.pause(4000)
     	let printT3 = "GET /update?key=" + apikey + "&field1=" + f1 + "&field2=" + f2 + "&field3=" + f3 + "&field4=" + f4 + "&field5=" + f5 + "&field6=" + f6 + "&field7=" + f7 + "&field8=" + f8
     	let printT4 = "AT+CIPSEND=" + (printT3.length + 2)
-    	serial.writeString("" + printT4 + "\u000D" + "\u000A")
+    	serial.writeString(printT4 + "\u000D" + "\u000A")
     	basic.pause(1000)
-    	serial.writeString("" + printT3 + "\u000D" + "\u000A")
+    	serial.writeString(printT3 + "\u000D" + "\u000A")
     	basic.pause(1000)
     }
 	
