@@ -220,9 +220,9 @@ namespace mbitbot {
 		serial.redirect(SerialPin.P1,SerialPin.P2,BaudRate.BaudRate115200)
 	}
     	serial.writeString("AT+RST" + "\u000D" + "\u000A")
-    	basic.pause(100)
+    	basic.pause(1000)
     	serial.writeString("AT+CWMODE_CUR=1" + "\u000D" + "\u000A")
-    	basic.pause(100)
+    	basic.pause(1000)
     	let printT = "AT+CWJAP_CUR=\"" + ssid + "\",\"" + key + "\""
     	serial.writeString(printT + "\u000D" + "\u000A")
     	basic.pause(4000)
