@@ -5,7 +5,8 @@
     "license": "MIT",
     "dependencies": {
         "NeoPixel": "github:microsoft/pxt-neopixel",
-        "SSD1306": "github:makecode-extensions/OLED12864_I2C"
+        "SSD1306": "https://github.com/makecode-extensions/OLED12864_I2C",
+        "IR Receiver": "https://github.com/YisrealHung/Sensor"
     },
     "files": [
         "README.md",
