@@ -4,7 +4,8 @@
     "description": "MbitBot",
     "license": "MIT",
     "dependencies": {
-        "NeoPixel": "github:microsoft/pxt-neopixel"
+        "NeoPixel": "github:microsoft/pxt-neopixel",
+        "OLED": "github:Tinkertanker/pxt-oled-ssd1306"
     },
     "files": [
         "README.md",
