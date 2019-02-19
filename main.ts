@@ -313,8 +313,34 @@ namespace mbitbot {
 	else {
 		return G3PM100
 	}	 
-    }	
-
+    }
+	
+    export enum CH {
+        //% block="True"
+        CH1 = 1,
+        //% block="False"
+        CH2 = 2
+    }
+    //% blockId=PMS3003_SET block="PMS3003 Low Power Mode|pin %apin"
+    //% weight=10
+	export function PMS3003_SET(apin: Apin = 1, ch: CH = 2): void { 
+	    let set_mode = 1
+	    if(ch ==1) {
+	    	set_mode = 0
+	    }
+	    else {
+	    	set_mode = 1
+	    }
+	    if(apin == 1) {
+		pins.digitalWritePin(DigitalPin.P14, set_mode)
+	    }
+	    else if(apin == 2) {
+		pins.digitalWritePin(DigitalPin.P16, set_mode)
+	    }
+	    else {
+		pins.digitalWritePin(DigitalPin.P2, set_mode)
+	    }	
+	}
     /**
  * DHT11
  */
