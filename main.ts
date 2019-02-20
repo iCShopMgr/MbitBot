@@ -300,7 +300,7 @@ namespace mbitbot {
                 }
             }
             PMcount = PMcount + 1
-            if (PMcount > 25) {
+            if (PMcount > 32) {
                 break
             }
         }
