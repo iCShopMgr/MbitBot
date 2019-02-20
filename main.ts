@@ -230,7 +230,7 @@ namespace mbitbot {
     
     //% blockId=ESP8266_SET block="ESP8266 Sleep Mode|pin %epin"
     //% weight=10
-    export function ESP8266_Sleep(epin: ESPpin = 1, num: number): void { 
+    export function ESP8266_Sleep(epin: ESPpin = 1): void { 
 	if(epin == 1) {
 		serial.redirect(SerialPin.P13,SerialPin.P14,BaudRate.BaudRate115200)
 	}
