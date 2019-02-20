@@ -321,7 +321,7 @@ namespace mbitbot {
         //% block="False"
         CH2 = 2
     }
-    //% blockId=PMS3003_SET block="PMS3003 Low Power Mode|pin %apin"
+    //% blockId=PMS3003_SET block="PMS3003 Low Power Mode|pin %apin|set %ch"
     //% weight=10
 	export function PMS3003_SET(apin: Apin = 1, ch: CH = 2): void { 
 	    let set_mode = 1
