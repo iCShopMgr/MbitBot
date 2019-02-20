@@ -283,7 +283,7 @@ namespace mbitbot {
 	else {
 		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
 	}
-	Smooth = serial.readBuffer(20)
+	//Smooth = serial.readBuffer(20)
     	Head = serial.readBuffer(32)
     	serial.redirectToUSB()
     	PMcount = 0
