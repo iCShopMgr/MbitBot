@@ -228,6 +228,23 @@ namespace mbitbot {
     	basic.pause(4000)
     }
     
+    //% blockId=ESP8266_SET block="ESP8266 Deep Sleep Mode|pin %epin|Time %num"
+    //% weight=10
+    export function ESP8266_Sleep(epin: ESPpin = 1, num: number): void { 
+	if(epin == 1) {
+		serial.redirect(SerialPin.P13,SerialPin.P14,BaudRate.BaudRate115200)
+	}
+	else if(epin == 2) {
+		serial.redirect(SerialPin.P15,SerialPin.P16,BaudRate.BaudRate115200)
+	}
+	else {
+		serial.redirect(SerialPin.P1,SerialPin.P2,BaudRate.BaudRate115200)
+	}
+	let modeSet = "AT+GSLP=\"" + num + "\"
+    	serial.writeString(modeSet + "\u000D" + "\u000A")
+    	basic.pause(1000)
+    }
+    
     //% blockId=Upload_ThingSpeak block="Upload ThingSpeak|API Keys %apikey|Field1 %f1|Field2 %f2|Field3 %f3|Field4 %f4|Field5 %f5|Field6 %f6|Field7 %f7|Field8 %f8"
     //% weight=10
     export function IC_ThingSpeak(apikey: string, f1: number, f2: number, f3: number, f4: number, f5: number, f6: number, f7: number, f8: number): void {
