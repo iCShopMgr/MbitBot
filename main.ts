@@ -240,7 +240,7 @@ namespace mbitbot {
 	else {
 		serial.redirect(SerialPin.P1,SerialPin.P2,BaudRate.BaudRate115200)
 	}
-	let modeSet = "AT+GSLP=\"" + num + "\"
+	let modeSet = "AT+GSLP=\"" + num + "\""
     	serial.writeString(modeSet + "\u000D" + "\u000A")
     	basic.pause(1000)
     }
