@@ -385,7 +385,7 @@ let DHTpin = DigitalPin.P1
 // Start
 function Ready(): number {
     pins.digitalWritePin(DHTpin, 0)
-    basic.pause(20)
+    basic.pause(25)
     pins.digitalWritePin(DHTpin, 1)
     while (pins.digitalReadPin(DHTpin) == 1) {}
     while (pins.digitalReadPin(DHTpin) == 0) {}
