@@ -246,10 +246,10 @@ namespace mbitbot {
 		serial.redirect(SerialPin.P1,SerialPin.P2,BaudRate.BaudRate115200)
 	}
 	if(ch == 1) {
-		serial.writeString("AT+SLEEP=1" + "\u000D" + "\u000A")
+		serial.writeString("AT+GSLP=1" + "\u000D" + "\u000A")
 	}
     	else {
-	        serial.writeString("AT+SLEEP=0" + "\u000D" + "\u000A")
+	        serial.writeString("AT+RST" + "\u000D" + "\u000A")
 	}
     	basic.pause(100)
     }
@@ -297,9 +297,31 @@ namespace mbitbot {
     let G3PM10 = 0
     let G3PM25 = 0
     
+    //% blockId=PMS3003_SET block="PMS3003 Low Power Mode|pin %apin|set %ch"
+    //% weight=10
+	export function PMS3003_SET(apin: Apin = 1, ch: CH = 2): void { 
+	    let set_mode = 1
+	    if(ch ==1) {
+	    	set_mode = 0
+	    }
+	    else {
+	    	set_mode = 1
+	    }
+	    if(apin == 1) {
+		pins.digitalWritePin(DigitalPin.P14, set_mode)
+	    }
+	    else if(apin == 2) {
+		pins.digitalWritePin(DigitalPin.P16, set_mode)
+	    }
+	    else {
+		pins.digitalWritePin(DigitalPin.P2, set_mode)
+	    }	
+	}
+
     //% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
     //% weight=10
     export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
+	PMS3003_SET(2)
 	if(apin == 1) {
 		serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
 	}
@@ -341,26 +363,7 @@ namespace mbitbot {
 	}	 
     }
 
-    //% blockId=PMS3003_SET block="PMS3003 Low Power Mode|pin %apin|set %ch"
-    //% weight=10
-	export function PMS3003_SET(apin: Apin = 1, ch: CH = 2): void { 
-	    let set_mode = 1
-	    if(ch ==1) {
-	    	set_mode = 0
-	    }
-	    else {
-	    	set_mode = 1
-	    }
-	    if(apin == 1) {
-		pins.digitalWritePin(DigitalPin.P14, set_mode)
-	    }
-	    else if(apin == 2) {
-		pins.digitalWritePin(DigitalPin.P16, set_mode)
-	    }
-	    else {
-		pins.digitalWritePin(DigitalPin.P2, set_mode)
-	    }	
-	}
+    
     /**
  * DHT11
  */
