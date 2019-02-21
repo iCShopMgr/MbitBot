@@ -1,7 +1,7 @@
 
 //% weight=0 color=#b5b100 icon="\uf299" block="MbitBot"
 namespace mbitbot {
-    	/*pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+    	pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P3, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P4, PinPullMode.PullUp)
@@ -12,7 +12,7 @@ namespace mbitbot {
 	pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
-	pins.setPull(DigitalPin.P16, PinPullMode.PullUp)*/
+	pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
 	let K = 4096 / 20
 	let StartBit = 0.5 * K
 	let FullScaleBit = 1.94 * K
