@@ -8,6 +8,8 @@
 # MbitBot_V1.2
 * 新增DHT11溫濕度感測器，可搭配空氣品質感測器(PMS3003)組成環境感測聯盟。
 * 新增Wi-Fi模組ESP8266以及上傳至ThingSpeak的程式積木。
+* 新增ESP8266 Sleep Mode
+* 新增PMS3003(G3)的SET Mode，須將SET線拉出，接線為[TX,SET,VCC,GND]。
 * 新增震動感測器Vibration。
 * 安裝程式庫時增加隨裝程式庫SSD1306。
   
