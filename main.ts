@@ -417,8 +417,8 @@ function ReadData() {
             while (pins.digitalReadPin(DHTpin) == 1) { }
             if (input.runningTimeMicros() - DHT_count > 40) {
                 DHT_value = DHT_value + (1 << (23 - k));
-                DHT_Temp = (DHT_value & 0x0000ffff)/2
-                DHT_Humi = (DHT_value >> 16)/2
+                DHT_Temp = (DHT_value & 0x0000ffff)
+                DHT_Humi = (DHT_value >> 16)
             }
         }
     }
@@ -444,10 +444,10 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
     }
     ReadData()
     if(th == 1) {
-        return DHT_Temp
+        return DHT_Temp/2
     }
     else { 
-        return DHT_Humi
+        return DHT_Humi/2
     } 
 }
 	
