@@ -383,24 +383,47 @@ let DHT_Temp = 0
 let DHT_Humi = 0
 let DHTpin = DigitalPin.P1
 
-function ReadData() {
+function Ready(): number {
     pins.digitalWritePin(DHTpin, 0)
     basic.pause(20)
     pins.digitalWritePin(DHTpin, 1)
-    while (pins.digitalReadPin(DHTpin) == 1) { }
-    while (pins.digitalReadPin(DHTpin) == 0) { }
-    while (pins.digitalReadPin(DHTpin) == 1) { }
-    DHT_value = 0
-    for (let k = 0; k < 24; k++) {
-        while (pins.digitalReadPin(DHTpin) == 0) { }
-        DHT_count = input.runningTimeMicros()
-        while (pins.digitalReadPin(DHTpin) == 1) { }
-        if (input.runningTimeMicros() - DHT_count > 40) {
-            DHT_value = DHT_value + (1 << (23 - k));
+
+    while (pins.digitalReadPin(DHTpin) == 1) {
+
+    }
+    DHT_count = input.runningTimeMicros()
+    while (pins.digitalReadPin(DHTpin) == 0) {
+        if (input.runningTimeMicros() - DHT_count > 100) {//100
+            return 0
         }
     }
-    DHT_Temp = (DHT_value & 0x0000ffff)
-    DHT_Humi = DHT_value >> 16
+    DHT_count = input.runningTimeMicros()
+    while (pins.digitalReadPin(DHTpin) == 1) {
+        if (input.runningTimeMicros() - DHT_count > 100) {//100
+            return 0
+        }
+    }
+    return 1
+}
+
+function ReadData(): number {
+    DHT_value = 0
+    if (Ready() == 1) {
+        for (let k = 0; k < 24; k++) {
+            while (pins.digitalReadPin(DHTpin) == 0) { }
+            DHT_count = input.runningTimeMicros()
+            while (pins.digitalReadPin(DHTpin) == 1) { }
+            if (input.runningTimeMicros() - DHT_count > 40) {
+                DHT_value = DHT_value + (1 << (23 - k));
+            }
+        }
+        DHT_Temp = (DHT_value & 0x0000ffff)
+        DHT_Humi = DHT_value >> 16
+    }
+    else {
+        pins.digitalWritePin(DHTpin, 1)
+    }
+    return 1
 }
 	
 //% blockId=Mbitbot_DHT11 block="DHT11|pin %thpin|get %th"
@@ -418,15 +441,15 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
     else {
         DHTpin = DigitalPin.P1
     }
-    
-    if(th == 1) {
-	ReadData()
-        return DHT_Temp
+    if(ReadData()==1) {
+	if(th == 1) {
+             return DHT_Temp
+        }
+        else { 
+             return DHT_Humi
+        } 
     }
-    else { 
-	ReadData()
-        return DHT_Humi
-    } 
+    
 }
 	
     /**
