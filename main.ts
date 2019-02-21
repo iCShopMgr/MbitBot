@@ -406,7 +406,7 @@ function Ready(): number {
     return 1
 }
 
-function ReadData(): number {
+function ReadData() {
     DHT_value = 0
     if (Ready() == 1) {
         for (let k = 0; k < 24; k++) {
@@ -415,15 +415,14 @@ function ReadData(): number {
             while (pins.digitalReadPin(DHTpin) == 1) { }
             if (input.runningTimeMicros() - DHT_count > 40) {
                 DHT_value = DHT_value + (1 << (23 - k));
+                DHT_Temp = DHT_value & 0x0000ffff
+                DHT_Humi = DHT_value >> 16
             }
         }
-        DHT_Temp = (DHT_value & 0x0000ffff)
-        DHT_Humi = DHT_value >> 16
     }
     else {
         pins.digitalWritePin(DHTpin, 1)
     }
-    return 1
 }
 	
 //% blockId=Mbitbot_DHT11 block="DHT11|pin %thpin|get %th"
@@ -441,15 +440,13 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
     else {
         DHTpin = DigitalPin.P1
     }
-    if(ReadData()==1) {
-	if(th == 1) {
-             return DHT_Temp
-        }
-        else { 
-             return DHT_Humi
-        } 
+    ReadData()
+    if(th == 1) {
+        return DHT_Temp
     }
-    
+    else { 
+        return DHT_Humi
+    } 
 }
 	
     /**
