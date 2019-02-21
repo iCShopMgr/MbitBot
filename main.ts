@@ -246,12 +246,12 @@ namespace mbitbot {
 		serial.redirect(SerialPin.P1,SerialPin.P2,BaudRate.BaudRate115200)
 	}
 	if(ch == 1) {
-		serial.writeString("AT+GSLP=1" + "\u000D" + "\u000A")
+		serial.writeString("AT+SLEEP=1" + "\u000D" + "\u000A")
 	}
     	else {
-	        serial.writeString("AT+RST" + "\u000D" + "\u000A")
+	        serial.writeString("AT+SLEEP=0" + "\u000D" + "\u000A")
 	}
-    	basic.pause(100)
+    	basic.pause(1000)
     }
     
     //% blockId=Upload_ThingSpeak block="Upload ThingSpeak|API Keys %apikey|Field1 %f1|Field2 %f2|Field3 %f3|Field4 %f4|Field5 %f5|Field6 %f6|Field7 %f7|Field8 %f8"
