@@ -246,10 +246,10 @@ namespace mbitbot {
 		serial.redirect(SerialPin.P1,SerialPin.P2,BaudRate.BaudRate115200)
 	}
 	if(ch == 1) {
-		serial.writeString(AT+SLEEP=1" + "\u000D" + "\u000A")
+		serial.writeString("AT+SLEEP=1" + "\u000D" + "\u000A")
 	}
     	else {
-	        serial.writeString(AT+SLEEP=0" + "\u000D" + "\u000A")
+	        serial.writeString("AT+SLEEP=0" + "\u000D" + "\u000A")
 	}
     	basic.pause(100)
     }
