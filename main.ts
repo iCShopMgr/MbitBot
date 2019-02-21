@@ -1,7 +1,7 @@
 
 //% weight=0 color=#b5b100 icon="\uf299" block="MbitBot"
 namespace mbitbot {
-    	pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+    	/*pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P3, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P4, PinPullMode.PullUp)
@@ -12,7 +12,7 @@ namespace mbitbot {
 	pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
 	pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
-	pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
+	pins.setPull(DigitalPin.P16, PinPullMode.PullUp)*/
 	let K = 4096 / 20
 	let StartBit = 0.5 * K
 	let FullScaleBit = 1.94 * K
@@ -227,10 +227,15 @@ namespace mbitbot {
     	serial.writeString(printT + "\u000D" + "\u000A")
     	basic.pause(4000)
     }
-    
-    //% blockId=ESP8266_SET block="ESP8266 Sleep Mode|pin %epin"
+    export enum CH {
+        //% block="ON"
+        CH1 = 1,
+        //% block="OFF"
+        CH2 = 2
+    }
+    //% blockId=ESP8266_SET block="ESP8266 Sleep Mode|pin %epin|set %ch"
     //% weight=10
-    export function ESP8266_Sleep(epin: ESPpin = 1): void { 
+    export function ESP8266_Sleep(epin: ESPpin = 1, ch: CH = 2): void { 
 	if(epin == 1) {
 		serial.redirect(SerialPin.P13,SerialPin.P14,BaudRate.BaudRate115200)
 	}
@@ -240,7 +245,12 @@ namespace mbitbot {
 	else {
 		serial.redirect(SerialPin.P1,SerialPin.P2,BaudRate.BaudRate115200)
 	}
-    	serial.writeString("AT+GSLP=1" + "\u000D" + "\u000A")
+	if(ch == 1) {
+		serial.writeString(AT+SLEEP=1" + "\u000D" + "\u000A")
+	}
+    	else {
+	        serial.writeString(AT+SLEEP=0" + "\u000D" + "\u000A")
+	}
     	basic.pause(100)
     }
     
@@ -330,13 +340,7 @@ namespace mbitbot {
 		return G3PM100
 	}	 
     }
-	
-    export enum CH {
-        //% block="True"
-        CH1 = 1,
-        //% block="False"
-        CH2 = 2
-    }
+
     //% blockId=PMS3003_SET block="PMS3003 Low Power Mode|pin %apin|set %ch"
     //% weight=10
 	export function PMS3003_SET(apin: Apin = 1, ch: CH = 2): void { 
