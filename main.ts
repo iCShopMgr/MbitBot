@@ -382,36 +382,27 @@ let DHT_value = 0
 let DHT_Temp = 0
 let DHT_Humi = 0
 let DHTpin = DigitalPin.P1
-// Start
-function Ready(): number {
-    pins.digitalWritePin(DHTpin, 0)
-    basic.pause(25)
-    pins.digitalWritePin(DHTpin, 1)
-    while (pins.digitalReadPin(DHTpin) == 1) {}
-    while (pins.digitalReadPin(DHTpin) == 0) {}
-    while (pins.digitalReadPin(DHTpin) == 1) {}
-    return 1
-}
 
-function ReadData(): number {
+function ReadData() {
+    pins.digitalWritePin(DHTpin, 0)
+    basic.pause(20)
+    pins.digitalWritePin(DHTpin, 1)
+    while (pins.digitalReadPin(DHTpin) == 1) { }
+    while (pins.digitalReadPin(DHTpin) == 0) { }
+    while (pins.digitalReadPin(DHTpin) == 1) { }
     DHT_value = 0
-    if (Ready() == 1) {
-        for (let k = 0; k < 24; k++) {
-            while (pins.digitalReadPin(DHTpin) == 0) {}
-            DHT_count = input.runningTimeMicros()
-            while (pins.digitalReadPin(DHTpin) == 1) {}
-            if (input.runningTimeMicros() - DHT_count > 40) {
-                DHT_value = DHT_value + (1 << (23 - k));
-            }
+    for (let k = 0; k < 24; k++) {
+        while (pins.digitalReadPin(DHTpin) == 0) { }
+        DHT_count = input.runningTimeMicros()
+        while (pins.digitalReadPin(DHTpin) == 1) { }
+        if (input.runningTimeMicros() - DHT_count > 40) {
+            DHT_value = DHT_value + (1 << (23 - k));
         }
-	DHT_Temp = (DHT_value & 0x0000ffff)
-    	DHT_Humi = DHT_value >> 16
     }
-    else {
-    	pins.digitalWritePin(DHTpin, 1)
-    } 
-    return 1
+    DHT_Temp = (DHT_value & 0x0000ffff)
+    DHT_Humi = DHT_value >> 16
 }
+	
 //% blockId=Mbitbot_DHT11 block="DHT11|pin %thpin|get %th"
 //% weight=10
 export function DHT11(thpin: THpin = 1, th: TH = 1): number {
