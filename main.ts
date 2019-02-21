@@ -427,12 +427,11 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
     else {
         DHTpin = DigitalPin.P1
     }
+    ReadData()
     if(th == 1) {
-        ReadData()
         return DHT_Temp
     }
-    else {
-        ReadData()
+    else { 
         return DHT_Humi
     } 
 }
