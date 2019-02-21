@@ -387,19 +387,21 @@ function Ready(): number {
     pins.digitalWritePin(DHTpin, 0)
     basic.pause(20)
     pins.digitalWritePin(DHTpin, 1)
-
+    DHT_count = input.runningTimeMicros()
     while (pins.digitalReadPin(DHTpin) == 1) {
-
+	if (input.runningTimeMicros() - DHT_count > 1000) {
+            return 0
+        }
     }
     DHT_count = input.runningTimeMicros()
     while (pins.digitalReadPin(DHTpin) == 0) {
-        if (input.runningTimeMicros() - DHT_count > 100) {//100
+        if (input.runningTimeMicros() - DHT_count > 100) {
             return 0
         }
     }
     DHT_count = input.runningTimeMicros()
     while (pins.digitalReadPin(DHTpin) == 1) {
-        if (input.runningTimeMicros() - DHT_count > 100) {//100
+        if (input.runningTimeMicros() - DHT_count > 100) {
             return 0
         }
     }
@@ -415,8 +417,8 @@ function ReadData() {
             while (pins.digitalReadPin(DHTpin) == 1) { }
             if (input.runningTimeMicros() - DHT_count > 40) {
                 DHT_value = DHT_value + (1 << (23 - k));
-                DHT_Temp = DHT_value & 0x0000ffff
-                DHT_Humi = DHT_value >> 16
+                DHT_Temp = (DHT_value & 0x0000ffff)/2
+                DHT_Humi = (DHT_value >> 16)/2
             }
         }
     }
