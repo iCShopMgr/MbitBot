@@ -679,7 +679,60 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
         }
         return PUpin
     }
+	
+    //CIRCUS KeyPad
+    	let KeyMapping: string[] = []
+	let i2c_add = 33
+	KeyMapping = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "*", "#"]
+	_Send(0x00)
+	function _Send(data: number) {
+	    pins.i2cWriteNumber(i2c_add, data, NumberFormat.Int8LE, false)
+	}
+	function _Receive(): number {
+	    let temp = 0
+	    temp = pins.i2cReadNumber(i2c_add, NumberFormat.Int8LE, false)
+	    return temp
+	}
+	function Read(ADD: string): number {
+	    let data = 0, mask = 0
+	    if (ADD == '1') data = 0b10001110, mask = 0b10000000;
+	    if (ADD == '2') data = 0b01001110, mask = 0b01000000;
+	    if (ADD == '3') data = 0b00101110, mask = 0b00100000;
+	    if (ADD == 'A') data = 0b00011110, mask = 0b00010000;
 
+	    if (ADD == '4') data = 0b10001101, mask = 0b10000000;
+	    if (ADD == '5') data = 0b01001101, mask = 0b01000000;
+	    if (ADD == '6') data = 0b00101101, mask = 0b00100000;
+	    if (ADD == 'B') data = 0b00011101, mask = 0b00010000;
+
+	    if (ADD == '7') data = 0b10001011, mask = 0b10000000;
+	    if (ADD == '8') data = 0b01001011, mask = 0b01000000;
+	    if (ADD == '9') data = 0b00101011, mask = 0b00100000;
+	    if (ADD == 'C') data = 0b00011011, mask = 0b00010000;
+
+	    if (ADD == '*') data = 0b10000111, mask = 0b10000000;
+	    if (ADD == '0') data = 0b01000111, mask = 0b01000000;
+	    if (ADD == '#') data = 0b00100111, mask = 0b00100000;
+	    if (ADD == 'D') data = 0b00010111, mask = 0b00010000;
+	    _Send(data)
+	    if (_Receive() & mask) {
+		return 0;
+	    }
+	    else {
+		return 1;
+	    }
+	}
+    //% blockId=KeyPad(4x4) block="KeyPad(4x4)"
+    //% weight=10
+    export function KeyPad(): string { 
+	for(let i=0; i<16; i++) {
+		if(Read(KeyMapping[i])) {
+			while(Read(KeyMapping[i])){}
+			return KeyMapping[i]
+		}
+	}
+    }
+	
     /**
      * CIRCUS Vibration
     */
