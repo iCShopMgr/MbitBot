@@ -39,6 +39,7 @@ CIRCUS IO:
 * PMS3003(G3)
 * DHT11
 * Vibration
+* ESP8266
 
 Makeblock IO:
 * Me line Follower
