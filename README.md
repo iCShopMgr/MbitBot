@@ -12,6 +12,7 @@
 * 新增PMS3003(G3)的SET Mode，須將SET線拉出，接線為[TX,SET,VCC,GND]。
 * 新增震動感測器Vibration。
 * 安裝程式庫時增加隨裝程式庫SSD1306。
+* 新增HC-SR04。
   
 # Previous Versions
 MbitBot_V1.1
