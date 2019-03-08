@@ -656,6 +656,19 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
         UI8 = 6,
     }
 
+    //HC-SR04
+    //% blockId=HCSR04 block="HCSR04 trig %trig|echo %echo"
+    //% weight=10
+    export function HCSR04(trig: DigitalPin, echo: DigitalPin): number {
+	let distance = 0
+        pins.setPull(trig, PinPullMode.PullNone);
+    	pins.digitalWritePin(trig, 1);
+    	control.waitMicros(1000)
+    	pins.digitalWritePin(trig, 0);
+    	distance = pins.pulseIn(echo, PulseValue.High)
+    	return distance = Math.round(distance / 2 / 29)
+    }
+	
     /**
      * CIRCUS Push Bottom
     */
