@@ -426,6 +426,10 @@ function ReadData() {
                 DHT_value = DHT_value + (1 << (23 - k));
                 DHT_Temp = (DHT_value & 0x0000ffff)
                 DHT_Humi = (DHT_value >> 16)
+				if (DHT_Temp > 50) {
+                    DHT_Temp = DHT_Temp/2
+                    DHT_Humi = DHT_Humi/2
+                }
             }
         }
     }
