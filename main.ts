@@ -451,10 +451,10 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
     }
     ReadData()
     if(th == 1) {
-        return Math.round(DHT_Temp/2)
+        return DHT_Temp
     }
     else { 
-        return Math.round(DHT_Humi/2)
+        return DHT_Humi
     } 
 }
 	
