@@ -333,7 +333,7 @@ export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number {
 	basic.pause(100)
 	Smooth = serial.readBuffer(20)
 	Head = serial.readBuffer(32)
-	for (let pm = 0; pm < 20; pm++) {
+	while(true) {
 		PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount)
 		if (PMnum == 66) {
 			PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount + 1)
@@ -346,6 +346,9 @@ export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number {
 			}
 		}
 		PMcount = PMcount + 1
+		if (PMcount > 20) {
+			break
+		}
 	}
 	serial.redirectToUSB()
 	basic.pause(100)
