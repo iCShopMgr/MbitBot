@@ -330,6 +330,7 @@ export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number {
 	else {
 		serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
 	}
+	basic.pause(100)
 	Smooth = serial.readBuffer(20)
 	Head = serial.readBuffer(32)
 	for (let pm = 0; pm < 20; pm++) {
@@ -347,6 +348,7 @@ export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number {
 		PMcount = PMcount + 1
 	}
 	serial.redirectToUSB()
+	basic.pause(100)
 	PMcount = 0
 
 	if(pms == 1) {
