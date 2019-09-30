@@ -407,15 +407,15 @@ namespace mbitbot {
 	
 	//% blockId=RMbitbot_PMS3003 block="RPMS3003|get %pms"
 	//% weight=10
-	export function IC_PMS3003(pms: PMS = 1): number {
+	export function RIC_PMS3003(pms: PMS = 1): number {
 		if(pms == 1) {
-			return G3PM10
+			return TG3PM10
 		}
 		else if(pms == 2) {
-			return G3PM25
+			return TG3PM25
 		}
 		else {
-			return G3PM100
+			return TG3PM100
 		}
 	}
 
