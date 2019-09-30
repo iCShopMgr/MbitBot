@@ -365,13 +365,12 @@ namespace mbitbot {
 		}	 
 	}
 	
-	let TG3PM100 = 0
-    let TG3PM10 = 0
-    let TG3PM25 = 0
-	
 	//% blockId=TMbitbot_PMS3003 block="TPMS3003|pin %apin"
 	//% weight=10
-	export function TIC_PMS3003(apin: Apin = 1): void { 
+	export function TIC_PMS3003(apin: Apin = 1): void {
+		let TG3PM100 = 0
+    	let TG3PM10 = 0
+    	let TG3PM25 = 0
 		if(apin == 1) {
 			serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
 		}
