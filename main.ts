@@ -519,6 +519,7 @@ export function DHT11(thpin: THpin = 1, th: TH = 1): number {
         DHTpin = DigitalPin.P1
     }
     ReadData()
+	basic.pause(100)
     if(th == 1) {
         return DHT_Temp
     }
