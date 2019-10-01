@@ -318,57 +318,57 @@ namespace mbitbot {
 	    }	
 	}
 
-	//% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
-	//% weight=10
-	export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
-		if(apin == 1) {
-			serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
-		}
-		else if(apin == 2) {
-			serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate9600)
-		}
-		else {
-			serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
-		}
-		basic.pause(100)
-		Smooth = serial.readBuffer(20)
-		Head = serial.readBuffer(32)
-		while(true) {
-			PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount)
-			if (PMnum == 66) {
-				PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount + 1)
-				if (PMnum == 77) {
-					Head.shift(PMcount)
-					G3PM10 = Head[10] * 256 + Head[11]
-					G3PM25 = Head[12] * 256 + Head[13]
-					G3PM100 = Head[14] * 256 + Head[15]
-					break
-				}
-			}
-			PMcount = PMcount + 1
-			if (PMcount > 20) {
-				break
-			}
-		}
-		serial.redirectToUSB()
-		basic.pause(100)
-		PMcount = 0
+// 	//% blockId=Mbitbot_PMS3003 block="PMS3003|pin %apin|get %pms"
+// 	//% weight=10
+// 	export function IC_PMS3003(apin: Apin = 1, pms: PMS = 1): number { 
+// 		if(apin == 1) {
+// 			serial.redirect(SerialPin.P14,SerialPin.P13,BaudRate.BaudRate9600)
+// 		}
+// 		else if(apin == 2) {
+// 			serial.redirect(SerialPin.P16,SerialPin.P15,BaudRate.BaudRate9600)
+// 		}
+// 		else {
+// 			serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
+// 		}
+// 		basic.pause(100)
+// 		Smooth = serial.readBuffer(20)
+// 		Head = serial.readBuffer(32)
+// 		while(true) {
+// 			PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount)
+// 			if (PMnum == 66) {
+// 				PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount + 1)
+// 				if (PMnum == 77) {
+// 					Head.shift(PMcount)
+// 					G3PM10 = Head[10] * 256 + Head[11]
+// 					G3PM25 = Head[12] * 256 + Head[13]
+// 					G3PM100 = Head[14] * 256 + Head[15]
+// 					break
+// 				}
+// 			}
+// 			PMcount = PMcount + 1
+// 			if (PMcount > 20) {
+// 				break
+// 			}
+// 		}
+// 		serial.redirectToUSB()
+// 		basic.pause(100)
+// 		PMcount = 0
 
-		if(pms == 1) {
-			return G3PM10
-		}
-		else if(pms == 2) {
-			return G3PM25
-		}
-		else {
-			return G3PM100
-		}	 
-	}
+// 		if(pms == 1) {
+// 			return G3PM10
+// 		}
+// 		else if(pms == 2) {
+// 			return G3PM25
+// 		}
+// 		else {
+// 			return G3PM100
+// 		}	 
+// 	}
 	
 	let TG3PM100 = 0
     let TG3PM10 = 0
     let TG3PM25 = 0
-	//% blockId=TMbitbot_PMS3003 block="TPMS3003|pin %apin"
+	//% blockId=Read_Mbitbot_PMS3003 block="Read PMS3003|pin %apin"
 	//% weight=10
 	export function TIC_PMS3003(apin: Apin = 1): void {
 		if(apin == 1) {
@@ -405,7 +405,7 @@ namespace mbitbot {
 		PMcount = 0	 
 	}
 	
-	//% blockId=RMbitbot_PMS3003 block="RPMS3003|get %pms"
+	//% blockId=_Mbitbot_PMS3003 block="Get PMS3003|get %pms"
 	//% weight=10
 	export function RIC_PMS3003(pms: PMS = 1): number {
 		if(pms == 1) {
