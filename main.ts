@@ -442,6 +442,7 @@ export enum TH {
 }
 let DHT_count = 0
 let DHT_value = 0
+let DHT_out = 0
 let DHT_Temp = 0
 let DHT_Humi = 0
 let DHTpin = DigitalPin.P1
@@ -475,17 +476,25 @@ function ReadData() {
     DHT_value = 0
     if (Ready() == 1) {
         for (let k = 0; k < 24; k++) {
-            while (pins.digitalReadPin(DHTpin) == 0) { }
+            DHT_out = 0
+            while (pins.digitalReadPin(DHTpin) == 0) {
+                DHT_out += 1
+                if (DHT_out > 100) {
+                    break
+                }
+            }
             DHT_count = input.runningTimeMicros()
-            while (pins.digitalReadPin(DHTpin) == 1) { }
+            DHT_out = 0
+            while (pins.digitalReadPin(DHTpin) == 1) {
+                DHT_out += 1
+                if (DHT_out > 100) {
+                    break
+                }
+            }
             if (input.runningTimeMicros() - DHT_count > 40) {
                 DHT_value = DHT_value + (1 << (23 - k));
                 DHT_Temp = (DHT_value & 0x0000ffff)
                 DHT_Humi = (DHT_value >> 16)
-				if (DHT_Temp > 50) {
-                    DHT_Temp = DHT_Temp/2
-                    DHT_Humi = DHT_Humi/2
-                }
             }
         }
     }
