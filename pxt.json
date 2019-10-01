@@ -5,7 +5,7 @@
     "license": "MIT",
     "dependencies": {
         "NeoPixel": "github:microsoft/pxt-neopixel",
-        "OLED": "github:makecode-extensions/oled12864_i2c#127c10de32c07df9d274b4ba3594ffef4c2785e1"
+        "OLED": "https://github.com/Tinkertanker/pxt-oled-ssd1306"
     },
     "files": [
         "README.md",
