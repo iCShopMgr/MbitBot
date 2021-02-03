@@ -330,13 +330,6 @@ namespace mbitbot {
         pms3 = 3,
     }
 
-    let PMcount = 0
-    let PMnum = 0
-    let Smooth: Buffer = null
-    let Head: Buffer = null
-    let G3PM100 = 0
-    let G3PM10 = 0
-    let G3PM25 = 0
 
   //% blockId=PMS3003_SET block="PMS3003 Low Power Mode pin %apin|set %ch"
   //% weight=10
@@ -360,8 +353,8 @@ namespace mbitbot {
 	}
 
 	let TG3PM100 = 0
-  let TG3PM10 = 0
-  let TG3PM25 = 0
+  	let TG3PM10 = 0
+  	let TG3PM25 = 0
 	//% blockId=Read_Mbitbot_PMS3003 block="Read PMS3003 pin %apin"
 	//% weight=10
 	export function TIC_PMS3003(apin: Apin = 1): void {
@@ -374,29 +367,28 @@ namespace mbitbot {
 		else {
 			serial.redirect(SerialPin.P2,SerialPin.P1,BaudRate.BaudRate9600)
 		}
-		basic.pause(100)
-		Smooth = serial.readBuffer(20)
-		Head = serial.readBuffer(32)
-		while(true) {
-			PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount)
-			if (PMnum == 66) {
-				PMnum = Head.getNumber(NumberFormat.Int8LE, PMcount + 1)
-				if (PMnum == 77) {
-					Head.shift(PMcount)
-					TG3PM10 = Head[10] * 256 + Head[11]
-					TG3PM25 = Head[12] * 256 + Head[13]
-					TG3PM100 = Head[14] * 256 + Head[15]
-					break
+		basic.pause(300)
+		let check = -1;
+		let Head;
+
+		while (check == -1) {
+			Head = serial.readBuffer(20)
+			let count = 0;
+			while (true) {
+				if (Head.getNumber(NumberFormat.Int8LE, count) == 0x42 && Head.getNumber(NumberFormat.Int8LE, count+1) == 0x4d) {
+					check = count;
 				}
-			}
-			PMcount = PMcount + 1
-			if (PMcount > 5) {
-				break
+				else if (count > 3) {
+					break;
+				}
+				count += 1
 			}
 		}
-		serial.redirectToUSB()
-		basic.pause(100)
-		PMcount = 0
+
+		TG3PM10 = 256*Head.getNumber(NumberFormat.Int8LE, check+10) + Head.getNumber(NumberFormat.Int8LE, check+11);
+		TG3PM25 = 256*Head.getNumber(NumberFormat.Int8LE, check+12) + Head.getNumber(NumberFormat.Int8LE, check+13);
+		TG3PM100 = 256*Head.getNumber(NumberFormat.Int8LE, check+14) + Head.getNumber(NumberFormat.Int8LE, check+15);
+
 	}
 
 	//% blockId=_Mbitbot_PMS3003 block="Get PMS3003 get %pms"
