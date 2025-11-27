@@ -61,5 +61,8 @@
     "mbitbot.clear|block": "LCD清除",
     "mbitbot.set_backlight|block": "設定LCD背光 %on",
     "mbitbot.putString|block": "LCD顯示文字 %s|在 x:%x|y:%y",
-    "mbitbot.putNumber|block": "LCD顯示數字 %n|在 x:%x|y:%y"
+    "mbitbot.putNumber|block": "LCD顯示數字 %n|在 x:%x|y:%y",
+    "mbitbot.enIR|block": "紅外線接收器初始化",
+    "mbitbot.irRead|block": "紅外線訊息",
+    "mbitbot.irRemote|block": "當接收到紅外線遙控器(NEC)訊息時"
 }
