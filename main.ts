@@ -998,4 +998,117 @@ namespace mbitbot {
     export function putNumber(n: number, x: number, y: number): void {
         putString(n.toString(),x,y)
     }
+
+    //% weight=102
+    //% blockId=IR block="Enable IR"
+    export function enIR(): void {
+        pins.onPulsed(DigitalPin.P8, PulseValue.Low, function () {
+            readir.push(pins.pulseDuration())
+        })
+        pins.onPulsed(DigitalPin.P8, PulseValue.High, function () {
+            readir.push(pins.pulseDuration())
+        })
+
+        pins.setEvents(DigitalPin.P8, PinEventType.Pulse)
+        pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
+    }
+
+    let hexCode: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
+    let readir: number[] = []
+    readir = []
+    let Pnumber = ""
+    let readCode = 0
+    let toHEX = ""
+    let IRREAD: Action;
+    let Reading = false
+    control.inBackground(function () {
+        while (true) {
+            if (Reading == true) {
+                if (readir[0] > 4000 && readir[0] < 5000) {
+                    basic.pause(100)
+                    let one_data = 0
+                    /*
+                        for (let i = 0; i < readir.length; i++) {
+                            serial.writeLine("" + readir[i])
+                        }
+                        */
+                    Pnumber = ""
+                    //count
+                    readCode = 0
+                    one_data = 2
+                    for (let i = 0; i < 8; i++) {
+                        if (readir[one_data] > 1000) {
+                            readCode += (1 << (7 - i))
+                        }
+                        one_data += 2
+                    }
+                    toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
+                    Pnumber += toHEX
+
+                    readCode = 0
+                    one_data = 18
+                    for (let i = 0; i < 8; i++) {
+                        if (readir[one_data] > 1000) {
+                            readCode += (1 << (7 - i))
+                        }
+                        one_data += 2
+                    }
+                    toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
+                    Pnumber += toHEX
+                    if (Pnumber == "00ff") {
+                        Pnumber = ""
+                        readCode = 0
+                        one_data = 34
+                        for (let i = 0; i < 8; i++) {
+                            if (readir[one_data] > 1000) {
+                                readCode += (1 << (7 - i))
+                            }
+                            one_data += 2
+                        }
+                        toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
+                        Pnumber += toHEX
+
+                        readCode = 0
+                        one_data = 50
+                        for (let i = 0; i < 8; i++) {
+                            if (readir[one_data] > 1000) {
+                                readCode += (1 << (7 - i))
+                            }
+                            one_data += 2
+                        }
+                        toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
+                        Pnumber += toHEX
+                    }
+                    else {
+                        Pnumber = "X"
+                    }
+
+                    basic.pause(50)
+                    readir = []
+
+                    if (Reading) {
+                        IRREAD()
+                    }
+
+                }
+                else {
+                    readir = []
+                }
+            }
+            basic.pause(1)
+        }
+    })
+
+    //% weight=101
+    //% blockId=IR_read block="IR Read"
+    export function irRead(): string {
+        return Pnumber
+    }
+
+    //% weight=100
+    //% blockId=IR_remote block="IR Remote(NEC)"
+    export function irRemote(add: Action): void {
+        IRREAD = add
+        Reading = true
+    }
 }
